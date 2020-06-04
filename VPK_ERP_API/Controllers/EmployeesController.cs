@@ -235,7 +235,7 @@ namespace VPK_ERP_API.Controllers
 
 
 
-                //lấy các giờ vào các ngày
+                //lấy các giờ vào các ngày !
                 var listGioVao1Ngay = db.Attendance_Detail.Where(w => w.Type == "IN" && w.CreatedDate.Value >= fromDynamicDate && w.CreatedDate <= toDynamicDate).ToList();
 
 
