@@ -468,5 +468,21 @@ namespace VPK_ERP_API.Controllers
 
 
 
+        [HttpPost]
+        [Route("api/thong-tin-cham-cong")]
+        public IHttpActionResult ThongTinChamCong([FromBody] ThongTinChamCong obj)
+        {
+
+            Employee emp = obj._token;
+
+            var attendances = db.Attendance_Detail.Include(a => a.AttendanceReason).Include(a => a.Employee).Where(w => w.Employee.RowID == emp.RowID).Select(s => new { s.Type, s.CreatedDate, AttendanceReason = s.AttendanceReason.Name, s.Reason }).OrderByDescending(o => o.CreatedDate).ToList();
+            return Ok(attendances);
+
+
+
+        }
+
+
+
     }
 }
