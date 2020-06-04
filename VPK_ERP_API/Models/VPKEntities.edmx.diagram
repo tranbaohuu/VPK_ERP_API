@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e179de0a7e334a9ca92c0402104b07ee" Name="Diagram1">
+        <EntityTypeShape EntityType="VPK_ERPModel.Attendance_Detail" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Attendance_Header" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.AttendanceReason" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Building" Width="1.5" PointX="16.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.City" Width="1.5" PointX="9.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Customer" Width="1.5" PointX="16.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Customer_Building" Width="1.5" PointX="18.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.District" Width="1.5" PointX="12" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Employee" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Job" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Overtime" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Salary" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.sysdiagram" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Ward" Width="1.5" PointX="14.25" PointY="10.25" IsExpanded="true" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Attendance_AttendanceReason" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Attendance_Detail_Attendance_Header" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Attendance_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Attendance_Header_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.Building_City_Code_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.Building_District_Code_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.Building_Ward_Code_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.Customer_Building_Building_RowID_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.District_City_Code_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.Customer_Building_Customer_RowID_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.Ward_District_Code_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Employees_Jobs" ManuallyRouted="false" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Salaries_Employees" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
