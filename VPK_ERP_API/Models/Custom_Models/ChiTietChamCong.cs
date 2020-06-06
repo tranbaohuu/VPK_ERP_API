@@ -66,6 +66,12 @@ namespace VPK_ERP.Models.Custom_Models
 
         public string LyDoChamRa { get; set; }
 
+        public float TotalHour { get; set; }
+
+        public string Reason { get; set; }
+
+        public DateTime NgayDangKy { get; set; }
+
     }
 }
 

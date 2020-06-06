@@ -484,5 +484,57 @@ namespace VPK_ERP_API.Controllers
 
 
 
+
+        [HttpPost]
+        [Route("api/thong-tin-tang-ca")]
+        public IHttpActionResult ThongTinTangCa([FromBody] ThongTinChamCong obj)
+        {
+
+
+
+
+            Employee emp = obj._token;
+
+            var attendances = db.Overtimes.Where(w => w.RowIDEmployee == emp.RowID).Select(s => new { s.CreatedDate, s.TotalHour, s.Reason }).OrderByDescending(o => o.CreatedDate).ToList();
+            return Ok(attendances);
+
+
+
+        }
+
+
+
+        [HttpPost]
+        [Route("api/dang-ky-tang-ca")]
+        public IHttpActionResult DangKyTangCa([FromBody] ThongTinChamCong obj)
+        {
+
+
+
+
+
+            Overtime ov = new Overtime();
+
+            ov.CreatedDate = obj.NgayDangKy;
+            ov.RowIDEmployee = obj._token.RowID;
+            ov.TotalHour = obj.TotalHour;
+            ov.Reason = obj.Reason;
+            db.Overtimes.Add(ov);
+
+            int affectedRows = db.SaveChanges();
+
+            return Ok();
+
+
+
+        }
+
+
+
+
+
+
+
+
     }
 }
