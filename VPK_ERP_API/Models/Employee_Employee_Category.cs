@@ -12,19 +12,13 @@ namespace VPK_ERP_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Overtime
+    public partial class Employee_Employee_Category
     {
         public int RowID { get; set; }
+        public Nullable<int> RowIDEmployeeCategory { get; set; }
         public Nullable<int> RowIDEmployee { get; set; }
-        public Nullable<double> TotalHour { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> RowIDEmployeeApprove { get; set; }
-        public Nullable<bool> IsApprove { get; set; }
-        public Nullable<System.DateTime> ApproveDate { get; set; }
-        public Nullable<bool> IsDelete { get; set; }
-        public string Reason { get; set; }
     
+        public virtual Employee_Category Employee_Category { get; set; }
         public virtual Employee Employee { get; set; }
-        public virtual Employee Employee1 { get; set; }
     }
 }

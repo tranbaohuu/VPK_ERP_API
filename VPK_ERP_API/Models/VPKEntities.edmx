@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VPK_ERPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VPK_ERPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Attendance_Detail">
           <Key>
             <PropertyRef Name="RowID" />
@@ -100,6 +100,53 @@
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RowIDDepartmentCategory" Type="int" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="255" />
+          <Property Name="DepartmentNameEnglish" Type="nvarchar" MaxLength="255" />
+          <Property Name="DepartmentShortName" Type="nvarchar" MaxLength="20" />
+          <Property Name="DepartmentCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="AliasNumber" Type="int" />
+          <Property Name="DepartmentTitleBoard" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="DepartmentPhoneNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="DepartmentEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="0" />
+          <Property Name="EditedDate" Type="datetime2" Precision="0" />
+          <Property Name="LastActiveDate" Type="datetime2" Precision="0" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="IsDelete" Type="varchar" MaxLength="1" />
+          <Property Name="IsActive" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Department_Category">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentCategoryName" Type="nvarchar" MaxLength="255" />
+          <Property Name="DepartmentCategoryNameEnglish" Type="nvarchar" MaxLength="255" />
+          <Property Name="DepartmentCategoryCode" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsDelete" Type="varchar" MaxLength="1" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="0" />
+          <Property Name="EditedDate" Type="datetime2" Precision="0" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="DepartmentCategoryCodeOld" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsShowVAM" Type="varchar" MaxLength="1" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="Images" Type="nvarchar" MaxLength="255" />
+          <Property Name="Alias" Type="nvarchar" MaxLength="255" />
+          <Property Name="SmallDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="MetaTitle" Type="nvarchar" MaxLength="255" />
+          <Property Name="MetaDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="MetaKeyword" Type="nvarchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="District">
           <Key>
             <PropertyRef Name="Code" />
@@ -110,6 +157,35 @@
           <Property Name="Description" Type="nvarchar" MaxLength="150" />
           <Property Name="IsDelete" Type="varchar" MaxLength="1" />
           <Property Name="OrderNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="Employee_Category">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="0" />
+          <Property Name="EditedDate" Type="datetime2" Precision="0" />
+          <Property Name="IsDelete" Type="varchar" MaxLength="1" />
+          <Property Name="RowIDDepartment" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="SeparateCode" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Employee_Category_Function">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RowIDEmployeeCategory" Type="int" />
+          <Property Name="RowIDFunction" Type="int" />
+        </EntityType>
+        <EntityType Name="Employee_Employee_Category">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RowIDEmployeeCategory" Type="int" />
+          <Property Name="RowIDEmployee" Type="int" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -129,6 +205,22 @@
           <Property Name="CityCode" Type="int" />
           <Property Name="DistrictCode" Type="int" />
           <Property Name="WardCode" Type="int" />
+        </EntityType>
+        <EntityType Name="Function">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FunctionName" Type="nvarchar" MaxLength="500" />
+          <Property Name="FunctionFeature" Type="nvarchar" MaxLength="255" />
+          <Property Name="Parent" Type="int" />
+          <Property Name="Components" Type="nvarchar" MaxLength="100" />
+          <Property Name="Url" Type="nvarchar" MaxLength="100" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="100" />
+          <Property Name="Order" Type="int" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="0" />
+          <Property Name="EditedDate" Type="datetime2" Precision="0" />
+          <Property Name="IsDelete" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Jobs">
           <Key>
@@ -243,6 +335,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Department_Department_Category_RowID_fk">
+          <End Role="Department_Category" Type="Self.Department_Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department_Category">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="RowIDDepartmentCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="District_City_Code_fk">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
           <End Role="District" Type="Self.District" Multiplicity="*" />
@@ -252,6 +358,76 @@
             </Principal>
             <Dependent Role="District">
               <PropertyRef Name="CityCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Category_Department_RowID_fk">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee_Category" Type="Self.Employee_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Category">
+              <PropertyRef Name="RowIDDepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Category_Function_Employee_Category_CategoryID_fk">
+          <End Role="Employee_Category" Type="Self.Employee_Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee_Category_Function" Type="Self.Employee_Category_Function" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Category">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Category_Function">
+              <PropertyRef Name="RowIDEmployeeCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Category_Function_Function_RowID_fk">
+          <End Role="Function" Type="Self.Function" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee_Category_Function" Type="Self.Employee_Category_Function" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Function">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Category_Function">
+              <PropertyRef Name="RowIDFunction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Employee_Category_Employee_Category_CategoryID_fk">
+          <End Role="Employee_Category" Type="Self.Employee_Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee_Employee_Category" Type="Self.Employee_Employee_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Category">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Employee_Category">
+              <PropertyRef Name="RowIDEmployeeCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Employee_Category_Employees_RowID_fk">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee_Employee_Category" Type="Self.Employee_Employee_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Employee_Category">
+              <PropertyRef Name="RowIDEmployee" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -327,6 +503,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Overtime_Employees__fk_2">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Overtime" Type="Self.Overtime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Overtime">
+              <PropertyRef Name="RowIDEmployeeApprove" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Overtime_Employees_RowID_fk">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Overtime" Type="Self.Overtime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Overtime">
+              <PropertyRef Name="RowIDEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Ward_District_Code_fk">
           <End Role="District" Type="Self.District" Multiplicity="0..1" />
           <End Role="Ward" Type="Self.Ward" Multiplicity="*" />
@@ -378,8 +580,14 @@
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Building" EntityType="Self.Customer_Building" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department_Category" EntityType="Self.Department_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Category" EntityType="Self.Employee_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Category_Function" EntityType="Self.Employee_Category_Function" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Employee_Category" EntityType="Self.Employee_Employee_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Function" EntityType="Self.Function" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Overtime" EntityType="Self.Overtime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salaries" EntityType="Self.Salaries" Schema="dbo" store:Type="Tables" />
@@ -405,9 +613,33 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Customer_Building" EntitySet="Customer_Building" />
           </AssociationSet>
+          <AssociationSet Name="Department_Department_Category_RowID_fk" Association="Self.Department_Department_Category_RowID_fk">
+            <End Role="Department_Category" EntitySet="Department_Category" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
           <AssociationSet Name="District_City_Code_fk" Association="Self.District_City_Code_fk">
             <End Role="City" EntitySet="City" />
             <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Category_Department_RowID_fk" Association="Self.Employee_Category_Department_RowID_fk">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee_Category" EntitySet="Employee_Category" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Category_Function_Employee_Category_CategoryID_fk" Association="Self.Employee_Category_Function_Employee_Category_CategoryID_fk">
+            <End Role="Employee_Category" EntitySet="Employee_Category" />
+            <End Role="Employee_Category_Function" EntitySet="Employee_Category_Function" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Category_Function_Function_RowID_fk" Association="Self.Employee_Category_Function_Function_RowID_fk">
+            <End Role="Function" EntitySet="Function" />
+            <End Role="Employee_Category_Function" EntitySet="Employee_Category_Function" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Employee_Category_Employee_Category_CategoryID_fk" Association="Self.Employee_Employee_Category_Employee_Category_CategoryID_fk">
+            <End Role="Employee_Category" EntitySet="Employee_Category" />
+            <End Role="Employee_Employee_Category" EntitySet="Employee_Employee_Category" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Employee_Category_Employees_RowID_fk" Association="Self.Employee_Employee_Category_Employees_RowID_fk">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employee_Employee_Category" EntitySet="Employee_Employee_Category" />
           </AssociationSet>
           <AssociationSet Name="FK_Attendance_AttendanceReason" Association="Self.FK_Attendance_AttendanceReason">
             <End Role="AttendanceReason" EntitySet="AttendanceReason" />
@@ -433,13 +665,20 @@
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Salaries" EntitySet="Salaries" />
           </AssociationSet>
+          <AssociationSet Name="Overtime_Employees__fk_2" Association="Self.Overtime_Employees__fk_2">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Overtime" EntitySet="Overtime" />
+          </AssociationSet>
+          <AssociationSet Name="Overtime_Employees_RowID_fk" Association="Self.Overtime_Employees_RowID_fk">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Overtime" EntitySet="Overtime" />
+          </AssociationSet>
           <AssociationSet Name="Ward_District_Code_fk" Association="Self.Ward_District_Code_fk">
             <End Role="District" EntitySet="District" />
             <End Role="Ward" EntitySet="Ward" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VPK_ERPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -589,6 +828,9 @@
           <NavigationProperty Name="Attendance_Header" Relationship="Self.FK_Attendance_Header_Employees" FromRole="Employees" ToRole="Attendance_Header" />
           <NavigationProperty Name="Job" Relationship="Self.FK_Employees_Jobs" FromRole="Employees" ToRole="Jobs" />
           <NavigationProperty Name="Salaries" Relationship="Self.FK_Salaries_Employees" FromRole="Employees" ToRole="Salaries" />
+          <NavigationProperty Name="Employee_Employee_Category" Relationship="VPK_ERPModel.Employee_Employee_Category_Employees_RowID_fk" FromRole="Employee" ToRole="Employee_Employee_Category" />
+          <NavigationProperty Name="Overtimes" Relationship="VPK_ERPModel.Overtime_Employees__fk_2" FromRole="Employee" ToRole="Overtime" />
+          <NavigationProperty Name="Overtimes1" Relationship="VPK_ERPModel.Overtime_Employees_RowID_fk" FromRole="Employee" ToRole="Overtime" />
         </EntityType>
         <EntityType Name="Job">
           <Key>
@@ -612,6 +854,8 @@
           <Property Name="ApproveDate" Type="DateTime" Precision="3" />
           <Property Name="IsDelete" Type="Boolean" />
           <Property Name="Reason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="VPK_ERPModel.Overtime_Employees__fk_2" FromRole="Overtime" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="VPK_ERPModel.Overtime_Employees_RowID_fk" FromRole="Overtime" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Salary">
           <Key>
@@ -900,6 +1144,44 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Departments" EntityType="VPK_ERPModel.Department" />
+          <EntitySet Name="Department_Category" EntityType="VPK_ERPModel.Department_Category" />
+          <EntitySet Name="Employee_Category" EntityType="VPK_ERPModel.Employee_Category" />
+          <EntitySet Name="Employee_Category_Function" EntityType="VPK_ERPModel.Employee_Category_Function" />
+          <EntitySet Name="Employee_Employee_Category" EntityType="VPK_ERPModel.Employee_Employee_Category" />
+          <EntitySet Name="Functions" EntityType="VPK_ERPModel.Function" />
+          <AssociationSet Name="Department_Department_Category_RowID_fk" Association="VPK_ERPModel.Department_Department_Category_RowID_fk">
+            <End Role="Department_Category" EntitySet="Department_Category" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Category_Department_RowID_fk" Association="VPK_ERPModel.Employee_Category_Department_RowID_fk">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee_Category" EntitySet="Employee_Category" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Category_Function_Employee_Category_CategoryID_fk" Association="VPK_ERPModel.Employee_Category_Function_Employee_Category_CategoryID_fk">
+            <End Role="Employee_Category" EntitySet="Employee_Category" />
+            <End Role="Employee_Category_Function" EntitySet="Employee_Category_Function" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Employee_Category_Employee_Category_CategoryID_fk" Association="VPK_ERPModel.Employee_Employee_Category_Employee_Category_CategoryID_fk">
+            <End Role="Employee_Category" EntitySet="Employee_Category" />
+            <End Role="Employee_Employee_Category" EntitySet="Employee_Employee_Category" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Category_Function_Function_RowID_fk" Association="VPK_ERPModel.Employee_Category_Function_Function_RowID_fk">
+            <End Role="Function" EntitySet="Functions" />
+            <End Role="Employee_Category_Function" EntitySet="Employee_Category_Function" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Employee_Category_Employees_RowID_fk" Association="VPK_ERPModel.Employee_Employee_Category_Employees_RowID_fk">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Employee_Employee_Category" EntitySet="Employee_Employee_Category" />
+          </AssociationSet>
+          <AssociationSet Name="Overtime_Employees__fk_2" Association="VPK_ERPModel.Overtime_Employees__fk_2">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Overtime" EntitySet="Overtimes" />
+          </AssociationSet>
+          <AssociationSet Name="Overtime_Employees_RowID_fk" Association="VPK_ERPModel.Overtime_Employees_RowID_fk">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Overtime" EntitySet="Overtimes" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -912,6 +1194,219 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RowIDDepartmentCategory" Type="Int32" />
+          <Property Name="DepartmentName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentNameEnglish" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentShortName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AliasNumber" Type="Int32" />
+          <Property Name="DepartmentTitleBoard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="EditedDate" Type="DateTime" Precision="0" />
+          <Property Name="LastActiveDate" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="IsDelete" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Department_Category" Relationship="VPK_ERPModel.Department_Department_Category_RowID_fk" FromRole="Department" ToRole="Department_Category" />
+          <NavigationProperty Name="Employee_Category" Relationship="VPK_ERPModel.Employee_Category_Department_RowID_fk" FromRole="Department" ToRole="Employee_Category" />
+        </EntityType>
+        <EntityType Name="Department_Category">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentCategoryName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentCategoryNameEnglish" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentCategoryCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="EditedDate" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="DepartmentCategoryCodeOld" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsShowVAM" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="Images" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SmallDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MetaTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MetaDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MetaKeyword" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Departments" Relationship="VPK_ERPModel.Department_Department_Category_RowID_fk" FromRole="Department_Category" ToRole="Department" />
+        </EntityType>
+        <EntityType Name="Employee_Category">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="EditedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsDelete" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="RowIDDepartment" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SeparateCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="VPK_ERPModel.Employee_Category_Department_RowID_fk" FromRole="Employee_Category" ToRole="Department" />
+          <NavigationProperty Name="Employee_Category_Function" Relationship="VPK_ERPModel.Employee_Category_Function_Employee_Category_CategoryID_fk" FromRole="Employee_Category" ToRole="Employee_Category_Function" />
+          <NavigationProperty Name="Employee_Employee_Category" Relationship="VPK_ERPModel.Employee_Employee_Category_Employee_Category_CategoryID_fk" FromRole="Employee_Category" ToRole="Employee_Employee_Category" />
+        </EntityType>
+        <EntityType Name="Employee_Category_Function">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RowIDEmployeeCategory" Type="Int32" />
+          <Property Name="RowIDFunction" Type="Int32" />
+          <NavigationProperty Name="Employee_Category" Relationship="VPK_ERPModel.Employee_Category_Function_Employee_Category_CategoryID_fk" FromRole="Employee_Category_Function" ToRole="Employee_Category" />
+          <NavigationProperty Name="Function" Relationship="VPK_ERPModel.Employee_Category_Function_Function_RowID_fk" FromRole="Employee_Category_Function" ToRole="Function" />
+        </EntityType>
+        <EntityType Name="Employee_Employee_Category">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RowIDEmployeeCategory" Type="Int32" />
+          <Property Name="RowIDEmployee" Type="Int32" />
+          <NavigationProperty Name="Employee_Category" Relationship="VPK_ERPModel.Employee_Employee_Category_Employee_Category_CategoryID_fk" FromRole="Employee_Employee_Category" ToRole="Employee_Category" />
+          <NavigationProperty Name="Employee" Relationship="VPK_ERPModel.Employee_Employee_Category_Employees_RowID_fk" FromRole="Employee_Employee_Category" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Function">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FunctionName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FunctionFeature" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Parent" Type="Int32" />
+          <Property Name="Components" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Icon" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Order" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="EditedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsDelete" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee_Category_Function" Relationship="VPK_ERPModel.Employee_Category_Function_Function_RowID_fk" FromRole="Function" ToRole="Employee_Category_Function" />
+        </EntityType>
+        <Association Name="Department_Department_Category_RowID_fk">
+          <End Type="VPK_ERPModel.Department_Category" Role="Department_Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VPK_ERPModel.Department" Role="Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department_Category">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="RowIDDepartmentCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Category_Department_RowID_fk">
+          <End Type="VPK_ERPModel.Department" Role="Department" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VPK_ERPModel.Employee_Category" Role="Employee_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Category">
+              <PropertyRef Name="RowIDDepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Category_Function_Employee_Category_CategoryID_fk">
+          <End Type="VPK_ERPModel.Employee_Category" Role="Employee_Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VPK_ERPModel.Employee_Category_Function" Role="Employee_Category_Function" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Category">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Category_Function">
+              <PropertyRef Name="RowIDEmployeeCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Employee_Category_Employee_Category_CategoryID_fk">
+          <End Type="VPK_ERPModel.Employee_Category" Role="Employee_Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VPK_ERPModel.Employee_Employee_Category" Role="Employee_Employee_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Category">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Employee_Category">
+              <PropertyRef Name="RowIDEmployeeCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Category_Function_Function_RowID_fk">
+          <End Type="VPK_ERPModel.Function" Role="Function" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VPK_ERPModel.Employee_Category_Function" Role="Employee_Category_Function" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Function">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Category_Function">
+              <PropertyRef Name="RowIDFunction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Employee_Category_Employees_RowID_fk">
+          <End Type="VPK_ERPModel.Employee" Role="Employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VPK_ERPModel.Employee_Employee_Category" Role="Employee_Employee_Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Employee_Employee_Category">
+              <PropertyRef Name="RowIDEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Overtime_Employees__fk_2">
+          <End Type="VPK_ERPModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="VPK_ERPModel.Overtime" Role="Overtime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Overtime">
+              <PropertyRef Name="RowIDEmployeeApprove" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Overtime_Employees_RowID_fk">
+          <End Type="VPK_ERPModel.Employee" Role="Employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VPK_ERPModel.Overtime" Role="Overtime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Overtime">
+              <PropertyRef Name="RowIDEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1134,6 +1629,104 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="VPK_ERPModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="VPK_ERPModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="VPK_ERPModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="LastActiveDate" ColumnName="LastActiveDate" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DepartmentAddress" ColumnName="DepartmentAddress" />
+                <ScalarProperty Name="DepartmentEmail" ColumnName="DepartmentEmail" />
+                <ScalarProperty Name="DepartmentPhoneNumber" ColumnName="DepartmentPhoneNumber" />
+                <ScalarProperty Name="DepartmentDescription" ColumnName="DepartmentDescription" />
+                <ScalarProperty Name="DepartmentTitleBoard" ColumnName="DepartmentTitleBoard" />
+                <ScalarProperty Name="AliasNumber" ColumnName="AliasNumber" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="DepartmentShortName" ColumnName="DepartmentShortName" />
+                <ScalarProperty Name="DepartmentNameEnglish" ColumnName="DepartmentNameEnglish" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="RowIDDepartmentCategory" ColumnName="RowIDDepartmentCategory" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department_Category">
+            <EntityTypeMapping TypeName="VPK_ERPModel.Department_Category">
+              <MappingFragment StoreEntitySet="Department_Category">
+                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SmallDescription" ColumnName="SmallDescription" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Images" ColumnName="Images" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsShowVAM" ColumnName="IsShowVAM" />
+                <ScalarProperty Name="DepartmentCategoryCodeOld" ColumnName="DepartmentCategoryCodeOld" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="DepartmentCategoryCode" ColumnName="DepartmentCategoryCode" />
+                <ScalarProperty Name="DepartmentCategoryNameEnglish" ColumnName="DepartmentCategoryNameEnglish" />
+                <ScalarProperty Name="DepartmentCategoryName" ColumnName="DepartmentCategoryName" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Category">
+            <EntityTypeMapping TypeName="VPK_ERPModel.Employee_Category">
+              <MappingFragment StoreEntitySet="Employee_Category">
+                <ScalarProperty Name="SeparateCode" ColumnName="SeparateCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RowIDDepartment" ColumnName="RowIDDepartment" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Category_Function">
+            <EntityTypeMapping TypeName="VPK_ERPModel.Employee_Category_Function">
+              <MappingFragment StoreEntitySet="Employee_Category_Function">
+                <ScalarProperty Name="RowIDFunction" ColumnName="RowIDFunction" />
+                <ScalarProperty Name="RowIDEmployeeCategory" ColumnName="RowIDEmployeeCategory" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Employee_Category">
+            <EntityTypeMapping TypeName="VPK_ERPModel.Employee_Employee_Category">
+              <MappingFragment StoreEntitySet="Employee_Employee_Category">
+                <ScalarProperty Name="RowIDEmployee" ColumnName="RowIDEmployee" />
+                <ScalarProperty Name="RowIDEmployeeCategory" ColumnName="RowIDEmployeeCategory" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Functions">
+            <EntityTypeMapping TypeName="VPK_ERPModel.Function">
+              <MappingFragment StoreEntitySet="Function">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Components" ColumnName="Components" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+                <ScalarProperty Name="FunctionFeature" ColumnName="FunctionFeature" />
+                <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

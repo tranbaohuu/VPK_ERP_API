@@ -20,6 +20,9 @@ namespace VPK_ERP_API.Models
             this.Attendance_Detail = new HashSet<Attendance_Detail>();
             this.Attendance_Header = new HashSet<Attendance_Header>();
             this.Salaries = new HashSet<Salary>();
+            this.Employee_Employee_Category = new HashSet<Employee_Employee_Category>();
+            this.Overtimes = new HashSet<Overtime>();
+            this.Overtimes1 = new HashSet<Overtime>();
         }
     
         public int RowID { get; set; }
@@ -44,5 +47,11 @@ namespace VPK_ERP_API.Models
         public virtual Job Job { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Salary> Salaries { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee_Employee_Category> Employee_Employee_Category { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Overtime> Overtimes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Overtime> Overtimes1 { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using VPK_ERP_API.Utilities;
 
 namespace VPK_ERP_API
 {
@@ -9,6 +10,10 @@ namespace VPK_ERP_API
     {
         public static void Register(HttpConfiguration config)
         {
+
+            Toolkits t = new Toolkits();
+            t.Select_All_Menu2_Huu_2(4);
+
 
             // New code
             config.EnableCors();

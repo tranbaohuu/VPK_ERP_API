@@ -136,10 +136,28 @@
       <DependentUpon>VPKEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Custom_Models\ChiTietChamCong.cs" />
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>VPKEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Department_Category.cs">
+      <DependentUpon>VPKEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\District.cs">
       <DependentUpon>VPKEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Employee.cs">
+      <DependentUpon>VPKEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee_Category.cs">
+      <DependentUpon>VPKEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee_Category_Function.cs">
+      <DependentUpon>VPKEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee_Employee_Category.cs">
+      <DependentUpon>VPKEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Function.cs">
       <DependentUpon>VPKEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Job.cs">
@@ -180,6 +198,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\MyHmac.cs" />
+    <Compile Include="Utilities\Toolkits.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Models\VPKEntities.edmx">
