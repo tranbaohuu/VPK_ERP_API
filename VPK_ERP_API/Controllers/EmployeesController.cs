@@ -207,7 +207,10 @@ namespace VPK_ERP_API.Controllers
             var toDate = new DateTime(nowTime.Year, month, dayInMonth);
 
 
-            var totalHour = db.Attendance_Header.Where(w => w.Employee.CMND == data.CMND && w.AttendanceShortDate >= fromDate && w.AttendanceShortDate <= toDate).Sum(s => s != null ? s.TotalWorkingHours : 0);
+            //var totalHour = db.Attendance_Header.Where(w => w.Employee.CMND == data.CMND && w.AttendanceShortDate >= fromDate && w.AttendanceShortDate <= toDate).Sum(s => s != null ? s.TotalWorkingHours : 0);
+
+
+            var rowIDEmployee = db.Employees.Where(w => w.CMND == data.CMND).Select(s => s.RowID).FirstOrDefault();
 
 
             //ViewBag.TotalHourThisMonth = Math.Round(totalHour, 1);
@@ -236,23 +239,23 @@ namespace VPK_ERP_API.Controllers
 
 
                 //lấy các giờ vào các ngày !
-                var listGioVao1Ngay = db.Attendance_Detail.Where(w => w.Type == "IN" && w.CreatedDate.Value >= fromDynamicDate && w.CreatedDate <= toDynamicDate).ToList();
+                var listGioVao1Ngay = db.Attendance_Detail.Where(w => w.RowIDEmployee == rowIDEmployee && w.Type == "IN" && w.CreatedDate.Value >= fromDynamicDate && w.CreatedDate <= toDynamicDate).ToList();
 
 
                 if (listGioVao1Ngay.Count == 0)
                 {
 
-                    continue;
+                    //continue;
                 }
 
 
-                var listGioRa1Ngay = db.Attendance_Detail.Where(w => w.Type == "OUT" && w.CreatedDate.Value >= fromDynamicDate && w.CreatedDate <= toDynamicDate).ToList();
+                var listGioRa1Ngay = db.Attendance_Detail.Where(w => w.RowIDEmployee == rowIDEmployee && w.Type == "OUT" && w.CreatedDate.Value >= fromDynamicDate && w.CreatedDate <= toDynamicDate).ToList();
 
 
                 if (listGioRa1Ngay.Count == 0)
                 {
 
-                    continue;
+                    //continue;
                 }
 
 
@@ -263,15 +266,7 @@ namespace VPK_ERP_API.Controllers
                 var gioRaTreNhat = listGioRa1Ngay.LastOrDefault();
 
 
-                listGioVaoSomNhat.Add(new ChiTietChamCong() { GioVaoSomNhat = gioVaoSomNhat.CreatedDate.Value, GioVaoTreNhat = gioVaoSomNhat.CreatedDate.Value, GioRaSomNhat = gioRaSomNhat.CreatedDate.Value, GioRaTreNhat = gioRaTreNhat.CreatedDate.Value, LyDo = gioVaoSomNhat.AttendanceReason.Name.ToString(), Loai = "GioVaoSomNhat" });
-                //listGioVaoTreNhat.Add(new ChiTietChamCong() { NgayGio = gioVaoTreNhat.CreatedDate.Value, LyDo = gioVaoTreNhat.AttendanceReason.Name.ToString(), Loai = "GioVaoTreNhat" });
-
-
-                //listGioRaSomNhat.Add(new ChiTietChamCong() { NgayGio = gioRaSomNhat.CreatedDate.Value, LyDo = gioRaSomNhat.AttendanceReason.Name.ToString(), Loai = "GioRaSomNhat" });
-
-
-                //listGioRaSomNhat.Add(new ChiTietChamCong() { NgayGio = gioRaTreNhat.CreatedDate.Value, LyDo = gioRaTreNhat.AttendanceReason.Name.ToString(), Loai = "GioRaTreNhat" });
-
+                listGioVaoSomNhat.Add(new ChiTietChamCong() { GioVaoSomNhat = (gioVaoSomNhat != null ? gioVaoSomNhat.CreatedDate : null), GioVaoTreNhat = (gioVaoSomNhat != null ? gioVaoSomNhat.CreatedDate : null), GioRaSomNhat = (gioRaSomNhat != null ? gioRaSomNhat.CreatedDate : null), GioRaTreNhat = (gioRaTreNhat != null ? gioRaTreNhat.CreatedDate : null), LyDo = (gioVaoSomNhat != null ? gioVaoSomNhat.AttendanceReason.Name.ToString() : ""), Loai = "GioVaoSomNhat" });
 
 
 
@@ -308,7 +303,7 @@ namespace VPK_ERP_API.Controllers
 
 
 
-                    if ((item.GioVaoSomNhat.Value >= fromDateSom && item.GioVaoSomNhat.Value <= toDateTre) || (item.GioVaoTreNhat.Value >= fromDateSom && item.GioVaoTreNhat.Value <= toDateTre) || (item.GioRaSomNhat.Value >= fromDateSom && item.GioRaSomNhat.Value <= toDateTre) || (item.GioRaTreNhat.Value >= fromDateSom && item.GioRaTreNhat.Value <= toDateTre))
+                    if ((item.GioVaoSomNhat >= fromDateSom && item.GioVaoSomNhat <= toDateTre) || (item.GioVaoTreNhat >= fromDateSom && item.GioVaoTreNhat <= toDateTre) || (item.GioRaSomNhat >= fromDateSom && item.GioRaSomNhat <= toDateTre) || (item.GioRaTreNhat >= fromDateSom && item.GioRaTreNhat <= toDateTre))
                     {
                         chitiet.GioVaoSomNhat = item.GioVaoSomNhat;
                         chitiet.GioVaoTreNhat = item.GioVaoTreNhat;

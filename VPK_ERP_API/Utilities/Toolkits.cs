@@ -14,6 +14,8 @@ namespace VPK_ERP_API.Utilities
         public int RowID { get; set; }
         public int Parent { get; set; }
 
+        public string URL { get; set; }
+
         public List<CauTrucMenu> Children { get; set; }
     }
 
@@ -31,7 +33,7 @@ namespace VPK_ERP_API.Utilities
 
             var query = ett.Database.SqlQuery<CauTrucMenu>(@"SELECT a.FunctionName,
                                            a.RowID,
-                                           a.Parent
+                                           a.Parent, a.URL
                                     FROM dbo.[Function] AS a
                                         INNER JOIN dbo.Employee_Category_Function AS b
                                             ON a.RowID = b.RowIDFunction
