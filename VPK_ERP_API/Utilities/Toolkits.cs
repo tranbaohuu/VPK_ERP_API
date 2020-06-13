@@ -24,7 +24,7 @@ namespace VPK_ERP_API.Utilities
 
 
 
-        public void Select_All_Menu2_Huu_2(int EmployeeID = 4)
+        public List<CauTrucMenu> Select_All_Menu2_Huu_2(int EmployeeID = 4)
         {
 
 
@@ -44,8 +44,13 @@ namespace VPK_ERP_API.Utilities
 
             if (query.Count > 0)
             {
-                var cauTrucMenu = XayDungCayMenu(query, 0);
+                return XayDungCayMenu(query, 0);
             }
+            else
+            {
+                return null;
+            }
+
 
 
 

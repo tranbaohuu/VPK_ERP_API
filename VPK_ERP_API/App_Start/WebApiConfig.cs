@@ -11,8 +11,8 @@ namespace VPK_ERP_API
         public static void Register(HttpConfiguration config)
         {
 
-            Toolkits t = new Toolkits();
-            t.Select_All_Menu2_Huu_2(4);
+            //Toolkits t = new Toolkits();
+            //t.Select_All_Menu2_Huu_2(4);
 
 
             // New code
