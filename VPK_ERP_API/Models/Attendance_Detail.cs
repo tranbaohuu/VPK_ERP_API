@@ -21,6 +21,8 @@ namespace VPK_ERP_API.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public int RowIDAttendanceReason { get; set; }
         public string Reason { get; set; }
+        public Nullable<int> RowIDEmployeeEdited { get; set; }
+        public Nullable<int> RowIDEmployeeCreated { get; set; }
     
         public virtual AttendanceReason AttendanceReason { get; set; }
         public virtual Attendance_Header Attendance_Header { get; set; }

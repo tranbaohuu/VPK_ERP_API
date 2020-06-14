@@ -16,6 +16,8 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="RowIDAttendanceReason" Type="int" Nullable="false" />
           <Property Name="Reason" Type="nvarchar" MaxLength="500" />
+          <Property Name="RowIDEmployeeEdited" Type="int" />
+          <Property Name="RowIDEmployeeCreated" Type="int" />
         </EntityType>
         <EntityType Name="Attendance_Header">
           <Key>
@@ -29,6 +31,8 @@
           <Property Name="TotalWorkingSeconds" Type="float" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="IsBlock" Type="bit" />
+          <Property Name="RowIDEmployeeCreated" Type="int" />
+          <Property Name="RowIDEmployeeEdited" Type="int" />
         </EntityType>
         <EntityType Name="AttendanceReason">
           <Key>
@@ -205,6 +209,7 @@
           <Property Name="CityCode" Type="int" />
           <Property Name="DistrictCode" Type="int" />
           <Property Name="WardCode" Type="int" />
+          <Property Name="Color" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Function">
           <Key>
@@ -696,6 +701,8 @@
           <NavigationProperty Name="AttendanceReason" Relationship="Self.FK_Attendance_AttendanceReason" FromRole="Attendance_Detail" ToRole="AttendanceReason" />
           <NavigationProperty Name="Attendance_Header" Relationship="Self.FK_Attendance_Detail_Attendance_Header" FromRole="Attendance_Detail" ToRole="Attendance_Header" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Attendance_Employees" FromRole="Attendance_Detail" ToRole="Employees" />
+          <Property Name="RowIDEmployeeEdited" Type="Int32" />
+          <Property Name="RowIDEmployeeCreated" Type="Int32" />
         </EntityType>
         <EntityType Name="Attendance_Header">
           <Key>
@@ -711,6 +718,8 @@
           <Property Name="IsBlock" Type="Boolean" />
           <NavigationProperty Name="Attendance_Detail" Relationship="Self.FK_Attendance_Detail_Attendance_Header" FromRole="Attendance_Header" ToRole="Attendance_Detail" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Attendance_Header_Employees" FromRole="Attendance_Header" ToRole="Employees" />
+          <Property Name="RowIDEmployeeCreated" Type="Int32" />
+          <Property Name="RowIDEmployeeEdited" Type="Int32" />
         </EntityType>
         <EntityType Name="AttendanceReason">
           <Key>
@@ -831,6 +840,7 @@
           <NavigationProperty Name="Employee_Employee_Category" Relationship="VPK_ERPModel.Employee_Employee_Category_Employees_RowID_fk" FromRole="Employee" ToRole="Employee_Employee_Category" />
           <NavigationProperty Name="Overtimes" Relationship="VPK_ERPModel.Overtime_Employees__fk_2" FromRole="Employee" ToRole="Overtime" />
           <NavigationProperty Name="Overtimes1" Relationship="VPK_ERPModel.Overtime_Employees_RowID_fk" FromRole="Employee" ToRole="Overtime" />
+          <Property Name="Color" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Job">
           <Key>
@@ -1416,6 +1426,8 @@
           <EntitySetMapping Name="Attendance_Detail">
             <EntityTypeMapping TypeName="VPK_ERPModel.Attendance_Detail">
               <MappingFragment StoreEntitySet="Attendance_Detail">
+                <ScalarProperty Name="RowIDEmployeeCreated" ColumnName="RowIDEmployeeCreated" />
+                <ScalarProperty Name="RowIDEmployeeEdited" ColumnName="RowIDEmployeeEdited" />
                 <ScalarProperty Name="RowID" ColumnName="RowID" />
                 <ScalarProperty Name="RowIDAttendanceHeader" ColumnName="RowIDAttendanceHeader" />
                 <ScalarProperty Name="RowIDEmployee" ColumnName="RowIDEmployee" />
@@ -1429,6 +1441,8 @@
           <EntitySetMapping Name="Attendance_Header">
             <EntityTypeMapping TypeName="VPK_ERPModel.Attendance_Header">
               <MappingFragment StoreEntitySet="Attendance_Header">
+                <ScalarProperty Name="RowIDEmployeeEdited" ColumnName="RowIDEmployeeEdited" />
+                <ScalarProperty Name="RowIDEmployeeCreated" ColumnName="RowIDEmployeeCreated" />
                 <ScalarProperty Name="RowID" ColumnName="RowID" />
                 <ScalarProperty Name="RowIDEmployee" ColumnName="RowIDEmployee" />
                 <ScalarProperty Name="AttendanceShortDate" ColumnName="AttendanceShortDate" />
@@ -1530,6 +1544,7 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="VPK_ERPModel.Employee">
               <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="RowID" ColumnName="RowID" />
                 <ScalarProperty Name="Fullname" ColumnName="Fullname" />
                 <ScalarProperty Name="CMND" ColumnName="CMND" />

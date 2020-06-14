@@ -9,6 +9,8 @@ namespace VPK_ERP.Models.Custom_Models
     public class ChiTietChamCong
     {
 
+        public int RowIDChiTietChamCong { get; set; }
+
         public DateTime NgayGio { get; set; }
 
 
@@ -29,6 +31,8 @@ namespace VPK_ERP.Models.Custom_Models
 
         public DateTime? GioRaTreNhat { get; set; }
 
+
+        public int RowIDEmployeeEdited { get; set; }
 
 
 
@@ -71,6 +75,8 @@ namespace VPK_ERP.Models.Custom_Models
         public string Reason { get; set; }
 
         public DateTime NgayDangKy { get; set; }
+
+        public int IDNguoiDuocChamCong { get; set; }
 
     }
 }

@@ -39,6 +39,7 @@ namespace VPK_ERP_API.Models
         public Nullable<int> CityCode { get; set; }
         public Nullable<int> DistrictCode { get; set; }
         public Nullable<int> WardCode { get; set; }
+        public string Color { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance_Detail> Attendance_Detail { get; set; }

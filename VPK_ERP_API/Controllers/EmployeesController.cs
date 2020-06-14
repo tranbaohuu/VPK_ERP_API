@@ -142,7 +142,7 @@ namespace VPK_ERP_API.Controllers
             }
 
 
-            var obj = db.Employees.Where(w => w.Username == email && w.Password == password).Select(s => new { s.Username, s.Fullname, s.RowIDJob, s.Job.Name, s.RowID }).FirstOrDefault();
+            var obj = db.Employees.Where(w => w.Username == email && w.Password == password).Select(s => new { s.Username, s.Fullname, s.RowIDJob, s.Job.Name, s.RowID, s.Color }).FirstOrDefault();
 
             if (obj == null)
             {
@@ -266,7 +266,17 @@ namespace VPK_ERP_API.Controllers
                 var gioRaTreNhat = listGioRa1Ngay.LastOrDefault();
 
 
-                listGioVaoSomNhat.Add(new ChiTietChamCong() { GioVaoSomNhat = (gioVaoSomNhat != null ? gioVaoSomNhat.CreatedDate : null), GioVaoTreNhat = (gioVaoSomNhat != null ? gioVaoSomNhat.CreatedDate : null), GioRaSomNhat = (gioRaSomNhat != null ? gioRaSomNhat.CreatedDate : null), GioRaTreNhat = (gioRaTreNhat != null ? gioRaTreNhat.CreatedDate : null), LyDo = (gioVaoSomNhat != null ? gioVaoSomNhat.AttendanceReason.Name.ToString() : ""), Loai = "GioVaoSomNhat" });
+                listGioVaoSomNhat.Add(new ChiTietChamCong()
+                {
+                    RowIDEmployeeEdited = (gioVaoSomNhat != null && gioVaoSomNhat.RowIDEmployeeEdited.HasValue ? gioVaoSomNhat.RowIDEmployeeEdited.Value : gioVaoTreNhat != null && gioVaoTreNhat.RowIDEmployeeEdited.HasValue ? gioVaoTreNhat.RowIDEmployeeEdited.Value : gioRaSomNhat != null && gioRaSomNhat.RowIDEmployeeEdited.HasValue ? gioRaSomNhat.RowIDEmployeeEdited.Value : gioRaTreNhat != null && gioRaTreNhat.RowIDEmployeeEdited.HasValue ? gioRaTreNhat.RowIDEmployeeEdited.Value : 0)
+                    ,
+                    GioVaoSomNhat = (gioVaoSomNhat != null ? gioVaoSomNhat.CreatedDate : null),
+                    GioVaoTreNhat = (gioVaoSomNhat != null ? gioVaoSomNhat.CreatedDate : null),
+                    GioRaSomNhat = (gioRaSomNhat != null ? gioRaSomNhat.CreatedDate : null),
+                    GioRaTreNhat = (gioRaTreNhat != null ? gioRaTreNhat.CreatedDate : null),
+                    LyDo = (gioVaoSomNhat != null ? gioVaoSomNhat.AttendanceReason.Name.ToString() : ""),
+                    Loai = "GioVaoSomNhat"
+                });
 
 
 
@@ -309,8 +319,10 @@ namespace VPK_ERP_API.Controllers
                         chitiet.GioVaoTreNhat = item.GioVaoTreNhat;
                         chitiet.GioRaSomNhat = item.GioRaSomNhat;
                         chitiet.GioRaTreNhat = item.GioRaTreNhat;
+                        chitiet.RowIDEmployeeEdited = item.RowIDEmployeeEdited;
                         chitiet.LyDo = item.LyDo;
                         chitiet.Loai = item.Loai;
+
 
                     }
 
@@ -377,7 +389,7 @@ namespace VPK_ERP_API.Controllers
             {
 
 
-                var obj = db.Employees.Where(w => w.CMND == data.CMND).Select(s => new { Fullname = s.Fullname, CMND = s.CMND, Phone = s.Phone, Address = s.Birthday }).FirstOrDefault();
+                var obj = db.Employees.Where(w => w.CMND == data.CMND).Select(s => new { RowID = s.RowID, Fullname = s.Fullname, CMND = s.CMND, Phone = s.Phone, Address = s.Birthday }).FirstOrDefault();
 
 
 
@@ -454,6 +466,105 @@ namespace VPK_ERP_API.Controllers
             a.CreatedDate = nowTime;
             db.Attendance_Detail.Add(a);
             db.SaveChanges();
+
+            return Ok();
+
+
+
+        }
+
+
+
+
+
+        [HttpPost]
+        [Route("api/them-thoi-gian-cham-cong")]
+        public IHttpActionResult ThemThoiGianChamcong([FromBody] ThongTinChamCong obj)
+        {
+
+            Employee emp = obj._token;
+
+
+
+            var fromDate = new DateTime(obj.NgayDangKy.Year, obj.NgayDangKy.Month, obj.NgayDangKy.Day, 00, 00, 00);
+            var toDate = new DateTime(obj.NgayDangKy.Year, obj.NgayDangKy.Month, obj.NgayDangKy.Day, 23, 59, 59);
+
+
+
+            var checkExistHeader = db.Attendance_Header.Where(w => w.AttendanceShortDate == fromDate && w.RowIDEmployee == obj.IDNguoiDuocChamCong).Count();
+
+
+            if (checkExistHeader > 0)
+            {
+
+            }
+            else
+            {
+                Attendance_Header hd = new Attendance_Header();
+                hd.AttendanceShortDate = fromDate;
+                hd.RowIDEmployee = obj.IDNguoiDuocChamCong;
+                hd.RowIDEmployeeCreated = emp.RowID;
+
+
+                db.Attendance_Header.Add(hd);
+                int affectedRow = db.SaveChanges();
+
+                if (affectedRow > 0)
+                {
+
+                    Attendance_Detail dt = new Attendance_Detail();
+                    dt.RowIDAttendanceHeader = hd.RowID;
+                    dt.Type = obj.LoaiChamCong;
+                    dt.RowIDEmployee = obj.IDNguoiDuocChamCong;
+                    dt.CreatedDate = obj.NgayDangKy;
+
+                    if (obj.LoaiChamCong == "IN")
+                    {
+                        dt.RowIDAttendanceReason = 3;
+                    }
+                    else
+                    {
+                        dt.RowIDAttendanceReason = 4;
+
+                    }
+
+                    dt.RowIDEmployeeEdited = emp.RowID;
+
+
+                    db.Attendance_Detail.Add(dt);
+                    affectedRow = db.SaveChanges();
+
+
+                    if (affectedRow > 0)
+                    {
+                        return Ok("Chỉnh sửa thành công !");
+                    }
+                    else
+                    {
+                        return BadRequest("Chỉnh sửa AttendanceDetail không thành công !");
+                    }
+
+
+
+
+
+
+
+                }
+                else
+                {
+                    return BadRequest("Chỉnh sửa AttendanceHeader không thành công !");
+
+                }
+
+
+
+
+
+            }
+
+
+
 
             return Ok();
 

@@ -28,6 +28,8 @@ namespace VPK_ERP_API.Models
         public Nullable<double> TotalWorkingSeconds { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<bool> IsBlock { get; set; }
+        public Nullable<int> RowIDEmployeeCreated { get; set; }
+        public Nullable<int> RowIDEmployeeEdited { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance_Detail> Attendance_Detail { get; set; }
