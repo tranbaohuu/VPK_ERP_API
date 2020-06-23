@@ -260,10 +260,10 @@ namespace VPK_ERP_API.Controllers
 
 
                 var gioVaoSomNhat = listGioVao1Ngay.FirstOrDefault();
-                var gioVaoTreNhat = listGioVao1Ngay.LastOrDefault();
+                var gioVaoTreNhat = listGioVao1Ngay.Count >= 2 ? listGioVao1Ngay.LastOrDefault() : null;
 
                 var gioRaSomNhat = listGioRa1Ngay.FirstOrDefault();
-                var gioRaTreNhat = listGioRa1Ngay.LastOrDefault();
+                var gioRaTreNhat =  listGioRa1Ngay.Count >= 2  ?listGioRa1Ngay.LastOrDefault() : null;
 
 
                 listGioVaoSomNhat.Add(new ChiTietChamCong()
@@ -271,7 +271,7 @@ namespace VPK_ERP_API.Controllers
                     RowIDEmployeeEdited = (gioVaoSomNhat != null && gioVaoSomNhat.RowIDEmployeeEdited.HasValue ? gioVaoSomNhat.RowIDEmployeeEdited.Value : gioVaoTreNhat != null && gioVaoTreNhat.RowIDEmployeeEdited.HasValue ? gioVaoTreNhat.RowIDEmployeeEdited.Value : gioRaSomNhat != null && gioRaSomNhat.RowIDEmployeeEdited.HasValue ? gioRaSomNhat.RowIDEmployeeEdited.Value : gioRaTreNhat != null && gioRaTreNhat.RowIDEmployeeEdited.HasValue ? gioRaTreNhat.RowIDEmployeeEdited.Value : 0)
                     ,
                     GioVaoSomNhat = (gioVaoSomNhat != null ? gioVaoSomNhat.CreatedDate : null),
-                    GioVaoTreNhat = (gioVaoSomNhat != null ? gioVaoSomNhat.CreatedDate : null),
+                    GioVaoTreNhat = (gioVaoTreNhat != null ? gioVaoTreNhat.CreatedDate : null),
                     GioRaSomNhat = (gioRaSomNhat != null ? gioRaSomNhat.CreatedDate : null),
                     GioRaTreNhat = (gioRaTreNhat != null ? gioRaTreNhat.CreatedDate : null),
                     LyDo = (gioVaoSomNhat != null ? gioVaoSomNhat.AttendanceReason.Name.ToString() : ""),
@@ -491,11 +491,46 @@ namespace VPK_ERP_API.Controllers
 
 
 
-            var checkExistHeader = db.Attendance_Header.Where(w => w.AttendanceShortDate == fromDate && w.RowIDEmployee == obj.IDNguoiDuocChamCong).Count();
+            var checkExistHeader = db.Attendance_Header.Where(w => w.AttendanceShortDate == fromDate && w.RowIDEmployee == obj.IDNguoiDuocChamCong).FirstOrDefault();
 
 
-            if (checkExistHeader > 0)
+            if (checkExistHeader != null)
             {
+
+
+                Attendance_Detail dt = new Attendance_Detail();
+                dt.RowIDAttendanceHeader = checkExistHeader.RowID;
+                dt.Type = obj.LoaiChamCong;
+                dt.RowIDEmployee = obj.IDNguoiDuocChamCong;
+                dt.CreatedDate = obj.NgayDangKy;
+
+                if (obj.LoaiChamCong == "IN")
+                {
+                    dt.RowIDAttendanceReason = 3;
+                }
+                else
+                {
+                    dt.RowIDAttendanceReason = 4;
+
+                }
+
+                dt.RowIDEmployeeEdited = emp.RowID;
+
+
+                db.Attendance_Detail.Add(dt);
+                var affectedRow = db.SaveChanges();
+
+
+                if (affectedRow > 0)
+                {
+                    return Ok("Chỉnh sửa thành công !");
+                }
+                else
+                {
+                    return BadRequest("Chỉnh sửa AttendanceDetail không thành công !");
+                }
+
+
 
             }
             else
@@ -566,7 +601,7 @@ namespace VPK_ERP_API.Controllers
 
 
 
-            return Ok();
+
 
 
 

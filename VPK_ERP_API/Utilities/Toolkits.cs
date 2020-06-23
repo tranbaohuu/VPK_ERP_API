@@ -16,6 +16,8 @@ namespace VPK_ERP_API.Utilities
 
         public string URL { get; set; }
 
+        public string Icon { get; set; }
+
         public List<CauTrucMenu> Children { get; set; }
     }
 
@@ -33,7 +35,7 @@ namespace VPK_ERP_API.Utilities
 
             var query = ett.Database.SqlQuery<CauTrucMenu>(@"SELECT a.FunctionName,
                                            a.RowID,
-                                           a.Parent, a.URL
+                                           a.Parent, a.URL, a.Icon
                                     FROM dbo.[Function] AS a
                                         INNER JOIN dbo.Employee_Category_Function AS b
                                             ON a.RowID = b.RowIDFunction
@@ -42,7 +44,7 @@ namespace VPK_ERP_API.Utilities
                                         INNER JOIN dbo.Employee_Employee_Category AS d
                                             ON c.RowID = d.RowIDEmployeeCategory
                                     WHERE a.IsDelete = 0
-                                          AND d.RowIDEmployee = " + EmployeeID).ToList();
+                                          AND d.RowIDEmployee = " + EmployeeID + " ORDER BY a.[Order] ASC").ToList();
 
             if (query.Count > 0)
             {
