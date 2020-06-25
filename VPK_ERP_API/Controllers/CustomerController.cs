@@ -29,12 +29,12 @@ namespace VPK_ERP_API.Controllers
 
 
 
-            var listCustomers = db.Customers.Select(s => new
+            var listCustomers = db.Customers.ToArray().Select(s => new
             {
                 s.RowID,
                 s.FullName,
                 s.Sex,
-                s.BirthDay,
+                BirthDay = s.BirthDay != null ? s.BirthDay.Value.ToString("dd/MM/yyyy") : "",
                 s.Address,
                 s.WardID,
                 s.DistrictID,
