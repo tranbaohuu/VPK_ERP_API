@@ -75,9 +75,13 @@ namespace VPK_ERP_API.Utilities
                 {
                     var children = XayDungCayMenu(arayMenu, element.RowID);
                     if (children.Count > 0)
+                    {
                         element.Children = children;
+                    }
+
                     MultiMenu.Add(element);
                     arayMenu.Remove(element);
+
                 }
 
                 //MultiMenu = MultiMenu.ToList();

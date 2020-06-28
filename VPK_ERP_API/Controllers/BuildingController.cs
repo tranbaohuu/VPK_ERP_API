@@ -46,10 +46,34 @@ namespace VPK_ERP_API.Controllers
 
         }
 
-        
+
+        [HttpPost]
+        //[ResponseType(typeof(Building))]
+        [Route("api/chi-tiet-cong-trinh")]
+        public IHttpActionResult ChiTietCongTrinh(Building c)
+        {
+            var data = db.Buildings.Where(w => w.RowID == c.RowID).Select(s => new
+            {
+                s.RowID,
+                s.Code,
+                s.Name,
+                s.Address,
+                WarName = s.Ward.Name,
+                DistrictName = s.District.Name,
+                CityName = s.City.Name
+
+
+            }).FirstOrDefault();
+
+
+            return Ok(data);
+
+        }
+
+
     }
 
 
-    
+
 
 }

@@ -29,8 +29,9 @@ namespace VPK_ERP_API.Controllers
 
             Toolkits t = new Toolkits();
 
+            var newMenu = t.Select_All_Menu2_Huu_2(emp.RowID);
 
-            return Ok(t.Select_All_Menu2_Huu_2(emp.RowID));
+            return Ok(newMenu);
 
 
 
