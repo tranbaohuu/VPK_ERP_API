@@ -92,7 +92,7 @@
           <Property Name="DateOfIssue" Type="datetime2" Precision="0" />
           <Property Name="PlaceOfIssue" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="int" />
-          <Property Name="RowID" Type="int" Nullable="false" />
+          <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer_Building">
           <Key>

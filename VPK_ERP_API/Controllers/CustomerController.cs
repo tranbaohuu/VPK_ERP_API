@@ -21,7 +21,7 @@ namespace VPK_ERP_API.Controllers
         private VPK_ERPEntities db = new VPK_ERPEntities();
 
         [HttpGet]
-        [ResponseType(typeof(Customer))]
+        //[ResponseType(typeof(Customer))]
         [Route("api/danh-sach-khach-hang")]
         public IHttpActionResult DanhSachKhachHang()
         {
@@ -47,12 +47,55 @@ namespace VPK_ERP_API.Controllers
 
 
 
-            }).ToList();
+            }).OrderByDescending(o => o.RowID).ToList();
 
 
 
 
             return Ok(listCustomers);
+
+        }
+
+
+        [HttpPost]
+        [ResponseType(typeof(Customer))]
+        [Route("api/them-khach-hang")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult ThemKhachHang(Customer c)
+        {
+
+            try
+            {
+
+                if (c.FullName != null && c.IDCardNo != null)
+                {
+
+                    db.Customers.Add(c);
+                    int affected = db.SaveChanges();
+
+                    if (affected > 0)
+                    {
+                        return Ok("Đã thêm thành công");
+                    }
+                    else
+                    {
+                        return BadRequest("Không thành công");
+                    }
+
+
+                }
+                else
+                {
+                    return BadRequest("Tham số truyền vào rỗng");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Lỗi nặng: " + ex.StackTrace);
+
+            }
+
 
         }
     }
