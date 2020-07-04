@@ -58,7 +58,6 @@ namespace VPK_ERP_API.Controllers
 
 
         [HttpPost]
-        [ResponseType(typeof(Customer))]
         [Route("api/them-khach-hang")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult ThemKhachHang(Customer c)
@@ -69,6 +68,10 @@ namespace VPK_ERP_API.Controllers
 
                 if (c.FullName != null && c.IDCardNo != null)
                 {
+
+                    c.IsActive = true;
+                    c.IsDelete = false;
+                    c.CreatedDate = DateTime.Now;
 
                     db.Customers.Add(c);
                     int affected = db.SaveChanges();

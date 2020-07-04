@@ -35,12 +35,12 @@ namespace VPK_ERP_API.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> EditedDate { get; set; }
         public Nullable<int> EmployeeID { get; set; }
-        public string IsDelete { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
         public string TaxCode { get; set; }
         public string IDCardNo { get; set; }
         public Nullable<System.DateTime> DateOfIssue { get; set; }
         public string PlaceOfIssue { get; set; }
-        public Nullable<int> IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; }
         public int RowID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

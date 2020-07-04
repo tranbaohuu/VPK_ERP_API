@@ -29,6 +29,9 @@ namespace VPK_ERP_API.Models
         public Nullable<int> CityID { get; set; }
         public Nullable<bool> IsDelete { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string Contract_Type { get; set; }
+        public Nullable<System.DateTime> SignDate { get; set; }
+        public string Contract_Code { get; set; }
     
         public virtual City City { get; set; }
         public virtual District District { get; set; }

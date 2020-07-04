@@ -55,6 +55,9 @@
           <Property Name="CityID" Type="int" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Contract_Code" Type="varchar" MaxLength="50" />
+          <Property Name="Contract_Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="SignDate" Type="date" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -86,12 +89,12 @@
           <Property Name="CreatedDate" Type="datetime2" Precision="0" />
           <Property Name="EditedDate" Type="datetime2" Precision="0" />
           <Property Name="EmployeeID" Type="int" />
-          <Property Name="IsDelete" Type="varchar" MaxLength="1" />
+          <Property Name="IsDelete" Type="bit" />
           <Property Name="TaxCode" Type="nvarchar" MaxLength="250" />
           <Property Name="IDCardNo" Type="nvarchar" MaxLength="50" />
           <Property Name="DateOfIssue" Type="datetime2" Precision="0" />
           <Property Name="PlaceOfIssue" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsActive" Type="int" />
+          <Property Name="IsActive" Type="bit" />
           <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer_Building">
@@ -747,6 +750,9 @@
           <NavigationProperty Name="District" Relationship="Self.Building_District_Code_fk" FromRole="Building" ToRole="District" />
           <NavigationProperty Name="Ward" Relationship="Self.Building_Ward_Code_fk" FromRole="Building" ToRole="Ward" />
           <NavigationProperty Name="Customer_Building" Relationship="Self.Customer_Building_Building_RowID_fk" FromRole="Building" ToRole="Customer_Building" />
+          <Property Name="Contract_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SignDate" Type="DateTime" Precision="0" />
+          <Property Name="Contract_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -780,12 +786,12 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
           <Property Name="EditedDate" Type="DateTime" Precision="0" />
           <Property Name="EmployeeID" Type="Int32" />
-          <Property Name="IsDelete" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IsDelete" Type="Boolean" />
           <Property Name="TaxCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="IDCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateOfIssue" Type="DateTime" Precision="0" />
           <Property Name="PlaceOfIssue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
           <Property Name="RowID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Customer_Building" Relationship="Self.Customer_Building_Customer_RowID_fk" FromRole="Customer" ToRole="Customer_Building" />
         </EntityType>
@@ -1466,6 +1472,9 @@
           <EntitySetMapping Name="Buildings">
             <EntityTypeMapping TypeName="VPK_ERPModel.Building">
               <MappingFragment StoreEntitySet="Building">
+                <ScalarProperty Name="Contract_Code" ColumnName="Contract_Code" />
+                <ScalarProperty Name="SignDate" ColumnName="SignDate" />
+                <ScalarProperty Name="Contract_Type" ColumnName="Contract_Type" />
                 <ScalarProperty Name="RowID" ColumnName="RowID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
