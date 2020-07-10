@@ -46,6 +46,8 @@
         <AssociationConnector Association="VPK_ERPModel.Employee_Employee_Category_Employees_RowID_fk" />
         <AssociationConnector Association="VPK_ERPModel.Overtime_Employees__fk_2" />
         <AssociationConnector Association="VPK_ERPModel.Overtime_Employees_RowID_fk" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Contract" Width="1.5" PointX="18.75" PointY="11.5" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Contract_Building" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

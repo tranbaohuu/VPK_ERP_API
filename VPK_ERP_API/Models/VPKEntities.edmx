@@ -55,9 +55,6 @@
           <Property Name="CityID" Type="int" />
           <Property Name="IsDelete" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="Contract_Code" Type="varchar" MaxLength="50" />
-          <Property Name="Contract_Type" Type="nvarchar" MaxLength="50" />
-          <Property Name="SignDate" Type="date" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -69,6 +66,19 @@
           <Property Name="PostCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ShortName" Type="nvarchar" MaxLength="3" />
           <Property Name="IsDelete" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContractCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContractType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContractPrice" Type="bigint" />
+          <Property Name="SignDate" Type="date" />
+          <Property Name="RowIDEmployee" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="RowIDBuilding" Type="int" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -283,42 +293,6 @@
           <Property Name="Description" Type="nvarchar" MaxLength="150" />
           <Property Name="IsDelete" Type="varchar" MaxLength="1" />
         </EntityType>
-        <Association Name="Building_City_Code_fk">
-          <End Role="City" Type="Self.City" Multiplicity="0..1" />
-          <End Role="Building" Type="Self.Building" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="City">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Building">
-              <PropertyRef Name="CityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Building_District_Code_fk">
-          <End Role="District" Type="Self.District" Multiplicity="0..1" />
-          <End Role="Building" Type="Self.Building" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="District">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Building">
-              <PropertyRef Name="DistrictID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Building_Ward_Code_fk">
-          <End Role="Ward" Type="Self.Ward" Multiplicity="0..1" />
-          <End Role="Building" Type="Self.Building" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ward">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Building">
-              <PropertyRef Name="WardID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Customer_Building_Building_RowID_fk">
           <End Role="Building" Type="Self.Building" Multiplicity="0..1" />
           <End Role="Customer_Building" Type="Self.Customer_Building" Multiplicity="*" />
@@ -487,6 +461,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Contract_Building">
+          <End Role="Building" Type="Self.Building" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Building">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="RowIDBuilding" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employees_Jobs">
           <End Role="Jobs" Type="Self.Jobs" Multiplicity="0..1" />
           <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
@@ -586,6 +574,7 @@
           <EntitySet Name="AttendanceReason" EntityType="Self.AttendanceReason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Building" EntityType="Self.Building" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Building" EntityType="Self.Customer_Building" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
@@ -601,18 +590,6 @@
           <EntitySet Name="Salaries" EntityType="Self.Salaries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ward" EntityType="Self.Ward" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="Building_City_Code_fk" Association="Self.Building_City_Code_fk">
-            <End Role="City" EntitySet="City" />
-            <End Role="Building" EntitySet="Building" />
-          </AssociationSet>
-          <AssociationSet Name="Building_District_Code_fk" Association="Self.Building_District_Code_fk">
-            <End Role="District" EntitySet="District" />
-            <End Role="Building" EntitySet="Building" />
-          </AssociationSet>
-          <AssociationSet Name="Building_Ward_Code_fk" Association="Self.Building_Ward_Code_fk">
-            <End Role="Ward" EntitySet="Ward" />
-            <End Role="Building" EntitySet="Building" />
-          </AssociationSet>
           <AssociationSet Name="Customer_Building_Building_RowID_fk" Association="Self.Customer_Building_Building_RowID_fk">
             <End Role="Building" EntitySet="Building" />
             <End Role="Customer_Building" EntitySet="Customer_Building" />
@@ -664,6 +641,10 @@
           <AssociationSet Name="FK_Attendance_Header_Employees" Association="Self.FK_Attendance_Header_Employees">
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Attendance_Header" EntitySet="Attendance_Header" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Building" Association="Self.FK_Contract_Building">
+            <End Role="Building" EntitySet="Building" />
+            <End Role="Contract" EntitySet="Contract" />
           </AssociationSet>
           <AssociationSet Name="FK_Employees_Jobs" Association="Self.FK_Employees_Jobs">
             <End Role="Jobs" EntitySet="Jobs" />
@@ -750,9 +731,7 @@
           <NavigationProperty Name="District" Relationship="Self.Building_District_Code_fk" FromRole="Building" ToRole="District" />
           <NavigationProperty Name="Ward" Relationship="Self.Building_Ward_Code_fk" FromRole="Building" ToRole="Ward" />
           <NavigationProperty Name="Customer_Building" Relationship="Self.Customer_Building_Building_RowID_fk" FromRole="Building" ToRole="Customer_Building" />
-          <Property Name="Contract_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SignDate" Type="DateTime" Precision="0" />
-          <Property Name="Contract_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Contracts" Relationship="VPK_ERPModel.FK_Contract_Building" FromRole="Building" ToRole="Contract" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -1198,6 +1177,11 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Overtime" EntitySet="Overtimes" />
           </AssociationSet>
+          <EntitySet Name="Contracts" EntityType="VPK_ERPModel.Contract" />
+          <AssociationSet Name="FK_Contract_Building" Association="VPK_ERPModel.FK_Contract_Building">
+            <End Role="Building" EntitySet="Buildings" />
+            <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1423,6 +1407,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContractCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContractType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContractPrice" Type="Int64" />
+          <Property Name="SignDate" Type="DateTime" Precision="0" />
+          <Property Name="RowIDEmployee" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowIDBuilding" Type="Int32" />
+          <NavigationProperty Name="Building" Relationship="VPK_ERPModel.FK_Contract_Building" FromRole="Contract" ToRole="Building" />
+        </EntityType>
+        <Association Name="FK_Contract_Building">
+          <End Type="VPK_ERPModel.Building" Role="Building" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VPK_ERPModel.Contract" Role="Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Building">
+              <PropertyRef Name="RowID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="RowIDBuilding" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1472,9 +1484,6 @@
           <EntitySetMapping Name="Buildings">
             <EntityTypeMapping TypeName="VPK_ERPModel.Building">
               <MappingFragment StoreEntitySet="Building">
-                <ScalarProperty Name="Contract_Code" ColumnName="Contract_Code" />
-                <ScalarProperty Name="SignDate" ColumnName="SignDate" />
-                <ScalarProperty Name="Contract_Type" ColumnName="Contract_Type" />
                 <ScalarProperty Name="RowID" ColumnName="RowID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1747,6 +1756,20 @@
                 <ScalarProperty Name="Parent" ColumnName="Parent" />
                 <ScalarProperty Name="FunctionFeature" ColumnName="FunctionFeature" />
                 <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contracts">
+            <EntityTypeMapping TypeName="VPK_ERPModel.Contract">
+              <MappingFragment StoreEntitySet="Contract">
+                <ScalarProperty Name="RowIDBuilding" ColumnName="RowIDBuilding" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RowIDEmployee" ColumnName="RowIDEmployee" />
+                <ScalarProperty Name="SignDate" ColumnName="SignDate" />
+                <ScalarProperty Name="ContractPrice" ColumnName="ContractPrice" />
+                <ScalarProperty Name="ContractType" ColumnName="ContractType" />
+                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
                 <ScalarProperty Name="RowID" ColumnName="RowID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -36,10 +36,10 @@ namespace VPK_ERP_API.Controllers
                 s.Building.RowID,
                 s.Building.Code,
                 s.Building.Name,
-                s.Building.Contract_Code,
-                s.Building.Contract_Type,
+                Contract_Code = s.Building.Contracts.Select(s1 => s1.ContractCode).FirstOrDefault(),
+                Contract_Type = s.Building.Contracts.Select(s1 => s1.ContractType).FirstOrDefault(),
                 s.Building.Address,
-                SignDate = s.Building.SignDate != null ? s.Building.SignDate.Value.ToString("dd/MM/yyyy") : "",
+                SignDate = s.Building.Contracts.Select(s1 => s1.SignDate) != null ? s.Building.Contracts.Select(s1 => s1.SignDate.Value.ToString("dd/MM/yyyy")).FirstOrDefault() : "",
                 CreatedDate = s.Building.CreatedDate != null ? s.Building.CreatedDate.Value.ToString("dd/MM/yyyy") : ""
 
 

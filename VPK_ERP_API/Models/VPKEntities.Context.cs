@@ -47,6 +47,7 @@ namespace VPK_ERP_API.Models
         public virtual DbSet<Employee_Category_Function> Employee_Category_Function { get; set; }
         public virtual DbSet<Employee_Employee_Category> Employee_Employee_Category { get; set; }
         public virtual DbSet<Function> Functions { get; set; }
+        public virtual DbSet<Contract> Contracts { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

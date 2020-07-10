@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
@@ -128,6 +129,9 @@
       <DependentUpon>VPKEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\City.cs">
+      <DependentUpon>VPKEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Contract.cs">
       <DependentUpon>VPKEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Customer.cs">

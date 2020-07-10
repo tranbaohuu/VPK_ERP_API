@@ -18,6 +18,7 @@ namespace VPK_ERP_API.Models
         public Building()
         {
             this.Customer_Building = new HashSet<Customer_Building>();
+            this.Contracts = new HashSet<Contract>();
         }
     
         public int RowID { get; set; }
@@ -29,14 +30,13 @@ namespace VPK_ERP_API.Models
         public Nullable<int> CityID { get; set; }
         public Nullable<bool> IsDelete { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string Contract_Type { get; set; }
-        public Nullable<System.DateTime> SignDate { get; set; }
-        public string Contract_Code { get; set; }
     
         public virtual City City { get; set; }
         public virtual District District { get; set; }
         public virtual Ward Ward { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer_Building> Customer_Building { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contract> Contracts { get; set; }
     }
 }
