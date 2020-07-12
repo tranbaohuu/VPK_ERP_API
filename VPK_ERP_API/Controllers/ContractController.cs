@@ -45,6 +45,57 @@ namespace VPK_ERP_API.Controllers
         }
 
 
+        [HttpPost]
+        [Route("api/them-hop-dong")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult ThemHopDong(Contract b)
+        {
+
+            try
+            {
+
+
+                if (b.ContractCode != null)
+                {
+
+
+                    b.IsDelete = false;
+                    b.CreatedDate = DateTime.Now;
+
+                    db.Contracts.Add(b);
+                    int affected = db.SaveChanges();
+
+                    if (affected > 0)
+                    {
+
+                        return Ok("Đã thêm thành công");
+
+
+                    }
+                    else
+                    {
+                        return BadRequest("Không thành công");
+                    }
+
+
+                }
+                else
+                {
+                    return BadRequest("Tham số truyền vào rỗng");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Lỗi nặng: " + ex.StackTrace);
+
+            }
+
+
+        }
+
+
+
 
     }
 }

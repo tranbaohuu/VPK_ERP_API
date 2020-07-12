@@ -22,6 +22,7 @@ namespace VPK_ERP_API.Models
         public Nullable<int> RowIDEmployee { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> RowIDBuilding { get; set; }
+        public Nullable<bool> IsDelete { get; set; }
     
         public virtual Building Building { get; set; }
     }

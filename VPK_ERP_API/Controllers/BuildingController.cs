@@ -144,7 +144,6 @@ namespace VPK_ERP_API.Controllers
                     return BadRequest("Tham số truyền vào rỗng");
 
                 }
-                return null;
             }
             catch (Exception ex)
             {

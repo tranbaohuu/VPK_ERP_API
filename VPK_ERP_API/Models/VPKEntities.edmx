@@ -79,6 +79,7 @@
           <Property Name="RowIDEmployee" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="RowIDBuilding" Type="int" />
+          <Property Name="IsDelete" Type="bit" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -1420,6 +1421,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowIDBuilding" Type="Int32" />
           <NavigationProperty Name="Building" Relationship="VPK_ERPModel.FK_Contract_Building" FromRole="Contract" ToRole="Building" />
+          <Property Name="IsDelete" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Contract_Building">
           <End Type="VPK_ERPModel.Building" Role="Building" Multiplicity="0..1">
@@ -1763,6 +1765,7 @@
           <EntitySetMapping Name="Contracts">
             <EntityTypeMapping TypeName="VPK_ERPModel.Contract">
               <MappingFragment StoreEntitySet="Contract">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="RowIDBuilding" ColumnName="RowIDBuilding" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="RowIDEmployee" ColumnName="RowIDEmployee" />

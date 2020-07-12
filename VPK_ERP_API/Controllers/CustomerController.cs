@@ -101,6 +101,63 @@ namespace VPK_ERP_API.Controllers
 
 
         }
+
+
+
+        [HttpPost]
+        [Route("api/sua-khach-hang")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult ChinhSuaThongTinKhachHang(Customer c)
+        {
+
+            try
+            {
+
+            
+
+                    var model = db.Customers.Where(w => w.RowID == c.RowID).FirstOrDefault();
+
+
+                    if (model != null)
+                    {
+
+                        model.FullName = c.FullName;
+                        model.Sex = c.Sex;
+                        model.IDCardNo = c.IDCardNo;
+                        model.Phone = c.Phone;
+                        model.BirthDay = c.BirthDay;
+                        model.Address = c.Address;
+
+
+                        var affected = db.SaveChanges();
+
+                        if (affected > 0)
+                        {
+                            return Ok("Đã thêm thành công");
+                        }
+                        else
+                        {
+                            return BadRequest("Không thành công");
+                        }
+
+                    }
+                    else
+                    {
+                        return BadRequest("Không tìm thấy thông tin khách hàng");
+                    }
+
+
+
+            
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Lỗi nặng: " + ex.StackTrace);
+
+            }
+
+
+        }
     }
 
 }
