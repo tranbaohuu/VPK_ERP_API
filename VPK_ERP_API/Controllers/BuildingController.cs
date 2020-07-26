@@ -153,6 +153,60 @@ namespace VPK_ERP_API.Controllers
 
 
         }
+
+
+        [HttpPost]
+        [Route("api/sua-cong-trinh")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult ChinhSuaThongTinCongTrinh(Building c)
+        {
+
+            try
+            {
+
+
+
+                var model = db.Buildings.Where(w => w.RowID == c.RowID).FirstOrDefault();
+
+
+                if (model != null)
+                {
+
+                    model.Name = c.Name;
+                    model.Code = c.Code;
+                    model.Address = c.Address;
+
+
+
+                    var affected = db.SaveChanges();
+
+                    if (affected > 0)
+                    {
+                        return Ok("Đã chỉnh sữa thành công");
+                    }
+                    else
+                    {
+                        return BadRequest("Không thành công");
+                    }
+
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy thông tin khách hàng");
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Lỗi nặng: " + ex.StackTrace);
+
+            }
+
+
+        }
     }
 
 

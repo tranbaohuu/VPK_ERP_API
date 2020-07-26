@@ -96,6 +96,57 @@ namespace VPK_ERP_API.Controllers
 
 
 
+        [HttpPost]
+        [Route("api/sua-hop-dong")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult SuaHopDong(Contract b)
+        {
+
+            try
+            {
+
+
+                var objContract = db.Contracts.Where(w => w.RowID == b.RowID).FirstOrDefault();
+
+                if (objContract != null)
+                {
+                    objContract.ContractCode = b.ContractCode;
+                    objContract.ContractType = b.ContractType;
+                    objContract.ContractPrice = b.ContractPrice;
+                    objContract.SignDate = b.SignDate;
+
+                    int affected = db.SaveChanges();
+
+                    if (affected > 0)
+                    {
+
+                        return Ok("Đã sửa thành công");
+
+
+                    }
+                    else
+                    {
+                        return BadRequest("Sửa không thành công");
+                    }
+
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy thông tin");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Lỗi nặng: " + ex.StackTrace);
+
+            }
+
+
+        }
+
+
 
     }
 }

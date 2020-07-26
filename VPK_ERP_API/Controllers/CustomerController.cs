@@ -133,7 +133,7 @@ namespace VPK_ERP_API.Controllers
 
                         if (affected > 0)
                         {
-                            return Ok("Đã thêm thành công");
+                            return Ok("Đã chỉnh sửa thành công");
                         }
                         else
                         {
