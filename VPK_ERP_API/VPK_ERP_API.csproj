@@ -112,6 +112,7 @@
     <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -170,6 +171,12 @@
       <DependentUpon>VPKEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Overtime.cs">
+      <DependentUpon>VPKEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReceiptHeader.cs">
+      <DependentUpon>VPKEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReceiptLine.cs">
       <DependentUpon>VPKEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Salary.cs">

@@ -12,38 +12,29 @@ namespace VPK_ERP_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Building
+    public partial class ReceiptHeader
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Building()
+        public ReceiptHeader()
         {
-            this.Customer_Building = new HashSet<Customer_Building>();
-            this.Contracts = new HashSet<Contract>();
-            this.ReceiptHeaders = new HashSet<ReceiptHeader>();
+            this.ReceiptLines = new HashSet<ReceiptLine>();
         }
     
         public int RowID { get; set; }
+        public Nullable<int> RowIDBuilding { get; set; }
+        public Nullable<int> RowIDCustomer { get; set; }
         public string Code { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public Nullable<int> WardID { get; set; }
-        public Nullable<int> DistrictID { get; set; }
-        public Nullable<int> CityID { get; set; }
-        public Nullable<bool> IsDelete { get; set; }
+        public string Description { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> EditedDate { get; set; }
         public Nullable<int> RowIDEmployeeCreated { get; set; }
         public Nullable<int> RowIDEmployeeEdited { get; set; }
     
-        public virtual City City { get; set; }
-        public virtual District District { get; set; }
-        public virtual Ward Ward { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Customer_Building> Customer_Building { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contract> Contracts { get; set; }
+        public virtual Building Building { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual Employee Employee1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReceiptHeader> ReceiptHeaders { get; set; }
+        public virtual ICollection<ReceiptLine> ReceiptLines { get; set; }
     }
 }

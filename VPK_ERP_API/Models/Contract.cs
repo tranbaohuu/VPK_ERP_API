@@ -14,6 +14,12 @@ namespace VPK_ERP_API.Models
     
     public partial class Contract
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Contract()
+        {
+            this.ReceiptLines = new HashSet<ReceiptLine>();
+        }
+    
         public int RowID { get; set; }
         public string ContractCode { get; set; }
         public string ContractType { get; set; }
@@ -23,7 +29,13 @@ namespace VPK_ERP_API.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> RowIDBuilding { get; set; }
         public Nullable<bool> IsDelete { get; set; }
+        public Nullable<int> RowIDEmployeeCreated { get; set; }
+        public Nullable<int> RowIDEmployeeEdited { get; set; }
     
         public virtual Building Building { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Employee Employee1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReceiptLine> ReceiptLines { get; set; }
     }
 }

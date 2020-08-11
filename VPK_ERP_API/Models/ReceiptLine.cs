@@ -12,19 +12,22 @@ namespace VPK_ERP_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer_Building
+    public partial class ReceiptLine
     {
         public int RowID { get; set; }
-        public Nullable<int> RowIDCustomer { get; set; }
-        public Nullable<int> RowIDBuilding { get; set; }
-        public Nullable<bool> IsDelete { get; set; }
+        public Nullable<int> RowIDReceiptHeader { get; set; }
+        public Nullable<int> RowIDContract { get; set; }
+        public string Description { get; set; }
+        public string Times { get; set; }
+        public Nullable<long> TotalPrice { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> EditedDate { get; set; }
         public Nullable<int> RowIDEmployeeCreated { get; set; }
         public Nullable<int> RowIDEmployeeEdited { get; set; }
     
-        public virtual Building Building { get; set; }
-        public virtual Customer Customer { get; set; }
+        public virtual Contract Contract { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual Employee Employee1 { get; set; }
+        public virtual ReceiptHeader ReceiptHeader { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace VPK_ERP_API.Models
         public Customer()
         {
             this.Customer_Building = new HashSet<Customer_Building>();
+            this.ReceiptHeaders = new HashSet<ReceiptHeader>();
         }
     
         public string FullName { get; set; }
@@ -42,8 +43,14 @@ namespace VPK_ERP_API.Models
         public string PlaceOfIssue { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public int RowID { get; set; }
+        public Nullable<int> RowIDEmployeeCreated { get; set; }
+        public Nullable<int> RowIDEmployeeEdited { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer_Building> Customer_Building { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Employee Employee1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReceiptHeader> ReceiptHeaders { get; set; }
     }
 }

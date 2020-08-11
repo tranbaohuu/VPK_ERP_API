@@ -5,20 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e179de0a7e334a9ca92c0402104b07ee" Name="Diagram1" ZoomLevel="90">
-        <EntityTypeShape EntityType="VPK_ERPModel.Attendance_Detail" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Attendance_Header" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.AttendanceReason" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Building" Width="1.5" PointX="16.5" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.City" Width="1.5" PointX="9.75" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Customer" Width="1.5" PointX="16.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Customer_Building" Width="1.5" PointX="18.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.District" Width="1.5" PointX="12" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Employee" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Job" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Overtime" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Salary" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.sysdiagram" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Ward" Width="1.5" PointX="14.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Attendance_Detail" Width="1.5" PointX="7.5" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Attendance_Header" Width="1.5" PointX="5.25" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.AttendanceReason" Width="1.5" PointX="5.25" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Building" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.City" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Customer" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Customer_Building" Width="1.5" PointX="10.5" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.District" Width="1.5" PointX="3" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Employee" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Job" Width="1.5" PointX="0.75" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Overtime" Width="1.5" PointX="5.25" PointY="33.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Salary" Width="1.5" PointX="5.25" PointY="37.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Ward" Width="1.5" PointX="3" PointY="29.375" IsExpanded="true" />
         <AssociationConnector Association="VPK_ERPModel.FK_Attendance_AttendanceReason" ManuallyRouted="false" />
         <AssociationConnector Association="VPK_ERPModel.FK_Attendance_Detail_Attendance_Header" ManuallyRouted="false" />
         <AssociationConnector Association="VPK_ERPModel.FK_Attendance_Employees" ManuallyRouted="false" />
@@ -32,12 +32,12 @@
         <AssociationConnector Association="VPK_ERPModel.Ward_District_Code_fk" ManuallyRouted="false" />
         <AssociationConnector Association="VPK_ERPModel.FK_Employees_Jobs" ManuallyRouted="false" />
         <AssociationConnector Association="VPK_ERPModel.FK_Salaries_Employees" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Department" Width="1.5" PointX="9.625" PointY="14.125" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Department_Category" Width="1.5" PointX="7.375" PointY="14.125" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Employee_Category" Width="1.5" PointX="11.875" PointY="14.875" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Employee_Category_Function" Width="1.5" PointX="14.125" PointY="17.5" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Employee_Employee_Category" Width="1.5" PointX="14.125" PointY="14.25" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Function" Width="1.5" PointX="11.875" PointY="18.875" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Department" Width="1.5" PointX="3.75" PointY="6.75" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Department_Category" Width="1.5" PointX="1.5" PointY="6.75" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Employee_Category" Width="1.5" PointX="6" PointY="7.625" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Employee_Category_Function" Width="1.5" PointX="8.25" PointY="8.25" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Employee_Employee_Category" Width="1.5" PointX="8.25" PointY="20.25" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Function" Width="1.5" PointX="6" PointY="3.5" />
         <AssociationConnector Association="VPK_ERPModel.Department_Department_Category_RowID_fk" />
         <AssociationConnector Association="VPK_ERPModel.Employee_Category_Department_RowID_fk" />
         <AssociationConnector Association="VPK_ERPModel.Employee_Category_Function_Employee_Category_CategoryID_fk" />
@@ -46,8 +46,26 @@
         <AssociationConnector Association="VPK_ERPModel.Employee_Employee_Category_Employees_RowID_fk" />
         <AssociationConnector Association="VPK_ERPModel.Overtime_Employees__fk_2" />
         <AssociationConnector Association="VPK_ERPModel.Overtime_Employees_RowID_fk" />
-        <EntityTypeShape EntityType="VPK_ERPModel.Contract" Width="1.5" PointX="18.75" PointY="11.5" />
+        <EntityTypeShape EntityType="VPK_ERPModel.Contract" Width="1.5" PointX="10.5" PointY="21.25" />
         <AssociationConnector Association="VPK_ERPModel.FK_Contract_Building" />
+        <EntityTypeShape EntityType="VPK_ERPModel.ReceiptHeader" Width="1.5" PointX="7.5" PointY="14.875" />
+        <EntityTypeShape EntityType="VPK_ERPModel.ReceiptLine" Width="1.5" PointX="12.75" PointY="18.25" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Building_Employees" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Building_Employees1" />
+        <AssociationConnector Association="VPK_ERPModel.FK_ReceiptHeader_Building" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Contract_Employees" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Contract_Employees1" />
+        <AssociationConnector Association="VPK_ERPModel.FK_ReceiptLine_Contract" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Customer_Employees" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Customer_Employees1" />
+        <AssociationConnector Association="VPK_ERPModel.FK_ReceiptHeader_Customer" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Customer_Building_Employees" />
+        <AssociationConnector Association="VPK_ERPModel.FK_Customer_Building_Employees1" />
+        <AssociationConnector Association="VPK_ERPModel.FK_ReceiptHeader_Employees" />
+        <AssociationConnector Association="VPK_ERPModel.FK_ReceiptHeader_Employees1" />
+        <AssociationConnector Association="VPK_ERPModel.FK_ReceiptLine_Employees" />
+        <AssociationConnector Association="VPK_ERPModel.FK_ReceiptLine_Employees1" />
+        <AssociationConnector Association="VPK_ERPModel.FK_ReceiptLine_ReceiptHeader" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

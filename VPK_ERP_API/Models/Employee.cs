@@ -23,6 +23,18 @@ namespace VPK_ERP_API.Models
             this.Employee_Employee_Category = new HashSet<Employee_Employee_Category>();
             this.Overtimes = new HashSet<Overtime>();
             this.Overtimes1 = new HashSet<Overtime>();
+            this.Buildings = new HashSet<Building>();
+            this.Buildings1 = new HashSet<Building>();
+            this.Contracts = new HashSet<Contract>();
+            this.Contracts1 = new HashSet<Contract>();
+            this.Customers = new HashSet<Customer>();
+            this.Customers1 = new HashSet<Customer>();
+            this.Customer_Building = new HashSet<Customer_Building>();
+            this.Customer_Building1 = new HashSet<Customer_Building>();
+            this.ReceiptHeaders = new HashSet<ReceiptHeader>();
+            this.ReceiptHeaders1 = new HashSet<ReceiptHeader>();
+            this.ReceiptLines = new HashSet<ReceiptLine>();
+            this.ReceiptLines1 = new HashSet<ReceiptLine>();
         }
     
         public int RowID { get; set; }
@@ -54,5 +66,29 @@ namespace VPK_ERP_API.Models
         public virtual ICollection<Overtime> Overtimes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Overtime> Overtimes1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Building> Buildings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Building> Buildings1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contract> Contracts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contract> Contracts1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer> Customers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer> Customers1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer_Building> Customer_Building { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer_Building> Customer_Building1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReceiptHeader> ReceiptHeaders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReceiptHeader> ReceiptHeaders1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReceiptLine> ReceiptLines { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReceiptLine> ReceiptLines1 { get; set; }
     }
 }
