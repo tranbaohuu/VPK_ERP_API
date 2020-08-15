@@ -15,6 +15,8 @@ namespace VPK_ERP_API.Models.Custom_Models
 
         public string DescriptionReceiptHeader { get; set; }
 
+        public int RowIDBuilding { get; set; }
+
 
 
 

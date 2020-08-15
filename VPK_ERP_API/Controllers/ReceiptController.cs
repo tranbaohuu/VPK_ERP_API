@@ -72,7 +72,7 @@ namespace VPK_ERP_API.Controllers
 
         [HttpPost]
         //[ResponseType(typeof(Building))]
-        [Route("api/danh-sach-chi-tiet-phieu")]
+        [Route("api/them-phieu-thu-chi")]
         public IHttpActionResult ThemPhieuThuChi(PhieuChiThu c)
         {
 
@@ -81,6 +81,9 @@ namespace VPK_ERP_API.Controllers
             rh.Code = c.Code;
             rh.Description = c.DescriptionReceiptHeader;
             rh.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
+            rh.RowIDBuilding = c.RowIDBuilding;
+
+            db.ReceiptHeaders.Add(rh);
 
             int affectedRows = db.SaveChanges();
 
@@ -98,6 +101,8 @@ namespace VPK_ERP_API.Controllers
                 rl.Times = c.Times;
                 rl.Description = c.Description;
                 rl.TotalPrice = c.TotalPrice;
+
+                db.ReceiptLines.Add(rl);
 
                 db.SaveChanges();
 
