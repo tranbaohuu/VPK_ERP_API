@@ -52,7 +52,7 @@ namespace VPK_ERP_API.Controllers
         [Route("api/danh-sach-chi-tiet-phieu")]
         public IHttpActionResult DanhSachChiTietPhieuTheoRowIDReceiptHeader(ReceiptHeader c)
         {
-            var listOfReceiptHeaderAndLine = db.ReceiptLines.Where(w => w.RowID == c.RowID).ToList().Select(s => new
+            var listOfReceiptHeaderAndLine = db.ReceiptLines.Where(w => w.RowIDReceiptHeader == c.RowID).ToList().Select(s => new
             {
                 s.RowID,
                 s.Description,
@@ -66,6 +66,30 @@ namespace VPK_ERP_API.Controllers
 
         }
 
+
+
+
+        [HttpPost]
+        //[ResponseType(typeof(Building))]
+        [Route("api/danh-sach-chi-tiet-phieu")]
+        public IHttpActionResult ThemPhieuThuChi(ReceiptLine c)
+        {
+
+
+            ReceiptLine rl = new ReceiptLine();
+            rl.RowIDContract = c.RowIDContract;
+            rl.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
+            rl.Times = c.Times;
+            rl.Description = c.Description;
+            rl.TotalPrice = c.TotalPrice;
+
+            db.SaveChanges();
+
+
+
+            return Ok();
+
+        }
 
 
     }

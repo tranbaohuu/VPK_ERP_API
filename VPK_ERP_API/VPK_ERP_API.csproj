@@ -143,6 +143,7 @@
     </Compile>
     <Compile Include="Models\Custom_Models\Building_CustomerBuilding.cs" />
     <Compile Include="Models\Custom_Models\ChiTietChamCong.cs" />
+    <Compile Include="Models\Custom_Models\PhieuChiThu.cs" />
     <Compile Include="Models\Department.cs">
       <DependentUpon>VPKEntities.tt</DependentUpon>
     </Compile>
