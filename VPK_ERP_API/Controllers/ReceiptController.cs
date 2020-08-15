@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using VPK_ERP_API.Models;
+using VPK_ERP_API.Models.Custom_Models;
 
 namespace VPK_ERP_API.Controllers
 {
@@ -72,22 +73,42 @@ namespace VPK_ERP_API.Controllers
         [HttpPost]
         //[ResponseType(typeof(Building))]
         [Route("api/danh-sach-chi-tiet-phieu")]
-        public IHttpActionResult ThemPhieuThuChi(ReceiptLine c)
+        public IHttpActionResult ThemPhieuThuChi(PhieuChiThu c)
         {
 
 
-            ReceiptLine rl = new ReceiptLine();
-            rl.RowIDContract = c.RowIDContract;
-            rl.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
-            rl.Times = c.Times;
-            rl.Description = c.Description;
-            rl.TotalPrice = c.TotalPrice;
+            ReceiptHeader rh = new ReceiptHeader();
+            rh.Code = c.Code;
+            rh.Description = c.DescriptionReceiptHeader;
+            rh.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
 
-            db.SaveChanges();
+            int affectedRows = db.SaveChanges();
 
 
+            if (affectedRows > 0)
+            {
 
-            return Ok();
+                int RowIDReceiptHeader = rh.RowID;
+
+
+                ReceiptLine rl = new ReceiptLine();
+                rl.RowIDContract = c.RowIDContract;
+                rl.RowIDReceiptHeader = RowIDReceiptHeader;
+                rl.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
+                rl.Times = c.Times;
+                rl.Description = c.Description;
+                rl.TotalPrice = c.TotalPrice;
+
+                db.SaveChanges();
+
+
+
+                return Ok("Thêm thành công !");
+            }
+            else
+            {
+                return BadRequest("Thêm ReceipHeader không thành công !");
+            }
 
         }
 
