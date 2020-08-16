@@ -59,7 +59,8 @@ namespace VPK_ERP_API.Controllers
                 s.Description,
                 s.Times,
                 s.TotalPrice,
-                s.CreatedDate
+                s.CreatedDate,
+                s.Contract.ContractCode
 
             }).OrderByDescending(o => o.RowID).ToList();
 
@@ -76,43 +77,58 @@ namespace VPK_ERP_API.Controllers
         public IHttpActionResult ThemPhieuThuChi(PhieuChiThu c)
         {
 
-
-            ReceiptHeader rh = new ReceiptHeader();
-            rh.Code = c.Code;
-            rh.Description = c.DescriptionReceiptHeader;
-            rh.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
-            rh.RowIDBuilding = c.RowIDBuilding;
-
-            db.ReceiptHeaders.Add(rh);
-
-            int affectedRows = db.SaveChanges();
-
-
-            if (affectedRows > 0)
+            if (c.DanhSachChiTietPhieuThu.Count > 0)
             {
 
-                int RowIDReceiptHeader = rh.RowID;
+
+                ReceiptHeader rh = new ReceiptHeader();
+                rh.Code = c.Code;
+                rh.Description = c.DescriptionReceiptHeader;
+                rh.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
+                rh.RowIDBuilding = c.RowIDBuilding;
+
+                db.ReceiptHeaders.Add(rh);
+
+                int affectedRows = db.SaveChanges();
 
 
-                ReceiptLine rl = new ReceiptLine();
-                rl.RowIDContract = c.RowIDContract;
-                rl.RowIDReceiptHeader = RowIDReceiptHeader;
-                rl.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
-                rl.Times = c.Times;
-                rl.Description = c.Description;
-                rl.TotalPrice = c.TotalPrice;
+                if (affectedRows > 0)
+                {
 
-                db.ReceiptLines.Add(rl);
-
-                db.SaveChanges();
+                    int RowIDReceiptHeader = rh.RowID;
 
 
 
-                return Ok("Thêm thành công !");
+
+                    foreach (var item in c.DanhSachChiTietPhieuThu)
+                    {
+                        ReceiptLine rl = new ReceiptLine();
+                        rl.RowIDContract = item.RowIDContract;
+                        rl.RowIDReceiptHeader = RowIDReceiptHeader;
+                        rl.RowIDEmployeeCreated = item.RowIDEmployeeCreated;
+                        rl.Times = item.Times;
+                        rl.Description = item.Description;
+                        rl.TotalPrice = item.TotalPrice;
+
+                        db.ReceiptLines.Add(rl);
+                    }
+
+
+
+                    db.SaveChanges();
+
+
+
+                    return Ok("Thêm thành công !");
+                }
+                else
+                {
+                    return BadRequest("Thêm ReceipHeader không thành công !");
+                }
             }
             else
             {
-                return BadRequest("Thêm ReceipHeader không thành công !");
+                return BadRequest("Không có chi tiết phiếu bên trong một tờ phiếu !");
             }
 
         }

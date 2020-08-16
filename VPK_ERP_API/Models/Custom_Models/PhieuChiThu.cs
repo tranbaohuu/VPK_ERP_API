@@ -17,6 +17,8 @@ namespace VPK_ERP_API.Models.Custom_Models
 
         public int RowIDBuilding { get; set; }
 
+        public List<ReceiptLine> DanhSachChiTietPhieuThu { get; set; }
+
 
 
 
