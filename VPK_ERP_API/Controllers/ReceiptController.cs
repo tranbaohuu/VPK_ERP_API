@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -33,7 +34,9 @@ namespace VPK_ERP_API.Controllers
                 s.RowID,
                 s.Code,
                 s.Description,
-                s.CreatedDate
+                s.CreatedDate,
+                TotalAllPrice = s.ReceiptLines.Sum(su => su.TotalPrice)
+
                 //ListOfReceipLine = s.ReceiptLines.Select(s2 => new { s2.RowID, s2.Description, s2.RowIDContract }).ToList()
 
 
@@ -55,12 +58,15 @@ namespace VPK_ERP_API.Controllers
         {
             var listOfReceiptHeaderAndLine = db.ReceiptLines.Where(w => w.RowIDReceiptHeader == c.RowID).ToList().Select(s => new
             {
+                s.ReceiptHeader.Code,
+                DescriptionReceiptHeader = s.ReceiptHeader.Description,
                 s.RowID,
                 s.Description,
                 s.Times,
                 s.TotalPrice,
                 s.CreatedDate,
-                s.Contract.ContractCode
+                ContractCode = (s.Contract != null ? s.Contract.ContractCode : "")
+
 
             }).OrderByDescending(o => o.RowID).ToList();
 
@@ -87,6 +93,8 @@ namespace VPK_ERP_API.Controllers
                 rh.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
                 rh.RowIDBuilding = c.RowIDBuilding;
 
+                rh.CreatedDate = DateTime.Now;
+
                 db.ReceiptHeaders.Add(rh);
 
                 int affectedRows = db.SaveChanges();
@@ -109,6 +117,7 @@ namespace VPK_ERP_API.Controllers
                         rl.Times = item.Times;
                         rl.Description = item.Description;
                         rl.TotalPrice = item.TotalPrice;
+                        rl.CreatedDate = DateTime.Now;
 
                         db.ReceiptLines.Add(rl);
                     }
