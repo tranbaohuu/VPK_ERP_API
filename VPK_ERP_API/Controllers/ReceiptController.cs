@@ -65,7 +65,8 @@ namespace VPK_ERP_API.Controllers
                 s.Times,
                 s.TotalPrice,
                 s.CreatedDate,
-                ContractCode = (s.Contract != null ? s.Contract.ContractCode : "")
+                ContractCode = (s.Contract != null ? s.Contract.ContractCode : ""),
+                RowIDContract = (s.Contract != null ? s.Contract.RowID : -1)
 
 
             }).OrderByDescending(o => o.RowID).ToList();
