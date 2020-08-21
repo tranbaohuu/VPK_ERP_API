@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using VPK_ERP_API.Models;
@@ -142,6 +143,99 @@ namespace VPK_ERP_API.Controllers
             }
 
         }
+
+
+
+        [HttpPost]
+        //[ResponseType(typeof(Building))]
+        [Route("api/sua-chi-tiet-phieu")]
+        public IHttpActionResult SuaChiTietPhieu(ReceiptLine c)
+        {
+
+            if (c != null)
+            {
+
+                var objReceiptLine = db.ReceiptLines.Where(w => w.RowID == c.RowID).FirstOrDefault();
+
+
+                if (objReceiptLine != null)
+                {
+
+
+                    objReceiptLine.RowIDContract = c.RowIDContract;
+                    objReceiptLine.Description = c.Description;
+                    objReceiptLine.Times = c.Times;
+                    objReceiptLine.TotalPrice = c.TotalPrice;
+                    objReceiptLine.EditedDate = DateTime.Now;
+                    objReceiptLine.RowIDEmployeeEdited = c.RowIDEmployeeEdited;
+
+                    int affectedRow = db.SaveChanges();
+
+
+
+                    if(affectedRow > 0)
+                    {
+                        return Ok("Chỉnh sửa chi tiết phiếu thành công !");
+                    }
+                    else
+                    {
+                        return Ok("Chỉnh sửa chi tiết phiếu thất bại !");
+                    }
+
+
+
+
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy chi tiết phiếu !");
+                }
+
+
+
+
+                //if (affectedRows > 0)
+                //{
+
+                //    int RowIDReceiptHeader = rh.RowID;
+
+
+
+
+                //    foreach (var item in c.DanhSachChiTietPhieuThu)
+                //    {
+                //        ReceiptLine rl = new ReceiptLine();
+                //        rl.RowIDContract = item.RowIDContract;
+                //        rl.RowIDReceiptHeader = RowIDReceiptHeader;
+                //        rl.RowIDEmployeeCreated = item.RowIDEmployeeCreated;
+                //        rl.Times = item.Times;
+                //        rl.Description = item.Description;
+                //        rl.TotalPrice = item.TotalPrice;
+                //        rl.CreatedDate = DateTime.Now;
+
+                //        db.ReceiptLines.Add(rl);
+                //    }
+
+
+
+                //    db.SaveChanges();
+
+
+
+                //    return Ok("Thêm thành công !");
+                //}
+                //else
+                //{
+                //    return BadRequest("Thêm ReceipHeader không thành công !");
+                //}
+            }
+            else
+            {
+                return BadRequest("Không có chi tiết phiếu bên trong một tờ phiếu !");
+            }
+
+        }
+
 
 
     }
