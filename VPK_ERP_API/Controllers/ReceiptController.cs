@@ -149,85 +149,49 @@ namespace VPK_ERP_API.Controllers
         [HttpPost]
         //[ResponseType(typeof(Building))]
         [Route("api/sua-chi-tiet-phieu")]
-        public IHttpActionResult SuaChiTietPhieu(ReceiptLine c)
+        public IHttpActionResult SuaChiTietPhieu(PhieuChiThu c)
         {
 
             if (c != null)
             {
 
-                var objReceiptLine = db.ReceiptLines.Where(w => w.RowID == c.RowID).FirstOrDefault();
 
+                int count = 0;
 
-                if (objReceiptLine != null)
+                foreach (var item in c.DanhSachChiTietPhieuThu)
                 {
 
 
-                    objReceiptLine.RowIDContract = c.RowIDContract;
-                    objReceiptLine.Description = c.Description;
-                    objReceiptLine.Times = c.Times;
-                    objReceiptLine.TotalPrice = c.TotalPrice;
-                    objReceiptLine.EditedDate = DateTime.Now;
-                    objReceiptLine.RowIDEmployeeEdited = c.RowIDEmployeeEdited;
-
-                    int affectedRow = db.SaveChanges();
+                    var objPhieuThu = db.ReceiptLines.Where(w => w.RowID == item.RowID).FirstOrDefault();
 
 
+                    objPhieuThu.ReceiptHeader.Code = c.Code;
+                    objPhieuThu.ReceiptHeader.Description = c.DescriptionReceiptHeader;
+                    objPhieuThu.RowIDContract = item.RowIDContract;
+                    objPhieuThu.Times = item.Times;
+                    objPhieuThu.Description = item.Description;
+                    objPhieuThu.TotalPrice = item.TotalPrice;
+                    objPhieuThu.EditedDate = DateTime.Now;
+                    objPhieuThu.RowIDEmployeeEdited = item.RowIDEmployeeEdited;
 
-                    if(affectedRow > 0)
-                    {
-                        return Ok("Chỉnh sửa chi tiết phiếu thành công !");
-                    }
-                    else
-                    {
-                        return Ok("Chỉnh sửa chi tiết phiếu thất bại !");
-                    }
+                    count += db.SaveChanges();
 
 
 
+                }
+
+
+                if (count > 0)
+                {
+                    return Ok("Chỉnh sửa phiếu thành công !");
 
                 }
                 else
                 {
-                    return BadRequest("Không tìm thấy chi tiết phiếu !");
+                    return BadRequest("Chỉnh sửa phiếu thất bại !");
+
                 }
 
-
-
-
-                //if (affectedRows > 0)
-                //{
-
-                //    int RowIDReceiptHeader = rh.RowID;
-
-
-
-
-                //    foreach (var item in c.DanhSachChiTietPhieuThu)
-                //    {
-                //        ReceiptLine rl = new ReceiptLine();
-                //        rl.RowIDContract = item.RowIDContract;
-                //        rl.RowIDReceiptHeader = RowIDReceiptHeader;
-                //        rl.RowIDEmployeeCreated = item.RowIDEmployeeCreated;
-                //        rl.Times = item.Times;
-                //        rl.Description = item.Description;
-                //        rl.TotalPrice = item.TotalPrice;
-                //        rl.CreatedDate = DateTime.Now;
-
-                //        db.ReceiptLines.Add(rl);
-                //    }
-
-
-
-                //    db.SaveChanges();
-
-
-
-                //    return Ok("Thêm thành công !");
-                //}
-                //else
-                //{
-                //    return BadRequest("Thêm ReceipHeader không thành công !");
-                //}
             }
             else
             {
