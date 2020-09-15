@@ -146,6 +146,66 @@ namespace VPK_ERP_API.Controllers
 
 
 
+
+        [HttpPost]
+        //[ResponseType(typeof(Building))]
+        [Route("api/them-phieu-thu-chi")]
+        public IHttpActionResult ThemNhanhPhieu(PhieuNhapNhanh c)
+        {
+
+
+
+            ReceiptHeader rh = new ReceiptHeader();
+            rh.Code = c.MaCongTrinh;
+            rh.Description = c.GhiChu;
+            rh.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
+            rh.RowIDBuilding = c.RowIDBuilding;
+
+            rh.CreatedDate = DateTime.Now;
+
+            db.ReceiptHeaders.Add(rh);
+
+            int affectedRows = db.SaveChanges();
+
+
+            if (affectedRows > 0)
+            {
+
+                int RowIDReceiptHeader = rh.RowID;
+
+
+
+
+
+                ReceiptLine rl = new ReceiptLine();
+                rl.RowIDContract = null;
+                rl.RowIDReceiptHeader = RowIDReceiptHeader;
+                rl.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
+                rl.Times = null;
+                rl.Description = c.GhiChu;
+                rl.TotalPrice = c.ThanhTien;
+                rl.CreatedDate = DateTime.Now;
+
+                db.ReceiptLines.Add(rl);
+
+
+
+
+                db.SaveChanges();
+
+
+
+                return Ok("Thêm thành công !");
+            }
+            else
+            {
+                return BadRequest("Thêm ReceipHeader không thành công !");
+            }
+
+        }
+
+
+
         [HttpPost]
         //[ResponseType(typeof(Building))]
         [Route("api/sua-chi-tiet-phieu")]
