@@ -22,6 +22,40 @@ namespace VPK_ERP_API.Controllers
 
         private VPK_ERPEntities db = new VPK_ERPEntities();
 
+
+
+        [HttpGet]
+        //[ResponseType(typeof(Building))]
+        [Route("api/danh-sach-cong-trinh")]
+        public IHttpActionResult DanhSachCongTrinh()
+        {
+
+
+
+
+            var listBuildings = db.Customer_Building.ToList().Select(s => new
+            {
+                s.Building.RowID,
+                s.Building.Code,
+                s.Building.Name,
+                Contract_Code = s.Building.Contracts.Select(s1 => s1.ContractCode).FirstOrDefault(),
+                Contract_Type = s.Building.Contracts.Select(s1 => s1.ContractType).FirstOrDefault(),
+                s.Building.Address,
+                CreatedDate = s.Building.CreatedDate != null ? s.Building.CreatedDate.Value.ToString("dd/MM/yyyy") : "",
+                TotalContractPrice = s.Building.Contracts.Sum(k => k.ContractPrice)
+
+
+
+            }).OrderByDescending(o => o.RowID).ToList();
+
+
+
+
+            return Ok(listBuildings);
+
+        }
+
+
         [HttpPost]
         //[ResponseType(typeof(Building))]
         [Route("api/danh-sach-cong-trinh-theo-khach-hang")]

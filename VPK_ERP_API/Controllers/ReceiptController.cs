@@ -149,7 +149,7 @@ namespace VPK_ERP_API.Controllers
 
         [HttpPost]
         //[ResponseType(typeof(Building))]
-        [Route("api/them-phieu-thu-chi")]
+        [Route("api/them-nhanh-phieu")]
         public IHttpActionResult ThemNhanhPhieu(PhieuNhapNhanh c)
         {
 
