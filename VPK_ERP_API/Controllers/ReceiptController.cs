@@ -94,8 +94,9 @@ namespace VPK_ERP_API.Controllers
                 rh.Description = c.DescriptionReceiptHeader;
                 rh.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
                 rh.RowIDBuilding = c.RowIDBuilding;
-
+                rh.Type = c.Type;
                 rh.CreatedDate = DateTime.Now;
+
 
                 db.ReceiptHeaders.Add(rh);
 
@@ -153,38 +154,65 @@ namespace VPK_ERP_API.Controllers
         public IHttpActionResult ThemNhanhPhieu(PhieuNhapNhanh c)
         {
 
+            //tìm xem công trình trong ngày đã thêm phiếu chi chưa có rồi thì gộp lại chỉ thêm receiptline
+
+            string[] mangNgay = c.NgayNhap.Split('/');
+
+            DateTime tuNgay = new DateTime(Int32.Parse(mangNgay[2]), Int32.Parse(mangNgay[1]), Int32.Parse(mangNgay[0]), 0, 0, 0);
+            DateTime denNgay = new DateTime(Int32.Parse(mangNgay[2]), Int32.Parse(mangNgay[1]), Int32.Parse(mangNgay[0]), 23, 59, 59);
+
+            var objHeader = db.ReceiptHeaders.Where(w => w.RowIDBuilding == c.RowIDCongTrinh && w.CreatedDate >= tuNgay && w.CreatedDate <= denNgay).FirstOrDefault();
+
+            int affectedRows = 0;
+            int RowIDReceiptHeader = 0;
+
+            if (objHeader == null)
+            {
+
+                ReceiptHeader rh = new ReceiptHeader();
+
+                rh.Description = c.GhiChu;
+                rh.RowIDEmployeeCreated = c.EmployeeID;
+                rh.RowIDBuilding = c.RowIDCongTrinh;
+
+                rh.CreatedDate = DateTime.Now;
+                rh.Type = 1;
+
+                db.ReceiptHeaders.Add(rh);
+
+                affectedRows = db.SaveChanges();
 
 
-            ReceiptHeader rh = new ReceiptHeader();
-            rh.Code = c.MaCongTrinh;
-            rh.Description = c.GhiChu;
-            rh.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
-            rh.RowIDBuilding = c.RowIDBuilding;
 
-            rh.CreatedDate = DateTime.Now;
+                if (affectedRows > 0)
+                {
+                    RowIDReceiptHeader = rh.RowID;
 
-            db.ReceiptHeaders.Add(rh);
 
-            int affectedRows = db.SaveChanges();
+                }
+
+
+            }
+            else
+            {
+                affectedRows = 99;
+                RowIDReceiptHeader = objHeader.RowID;
+            }
+
 
 
             if (affectedRows > 0)
             {
 
-                int RowIDReceiptHeader = rh.RowID;
-
-
-
-
-
                 ReceiptLine rl = new ReceiptLine();
                 rl.RowIDContract = null;
                 rl.RowIDReceiptHeader = RowIDReceiptHeader;
-                rl.RowIDEmployeeCreated = c.RowIDEmployeeCreated;
+                rl.RowIDEmployeeCreated = c.EmployeeID;
                 rl.Times = null;
                 rl.Description = c.GhiChu;
                 rl.TotalPrice = c.ThanhTien;
                 rl.CreatedDate = DateTime.Now;
+
 
                 db.ReceiptLines.Add(rl);
 
