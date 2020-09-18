@@ -300,6 +300,13 @@
           <Property Name="EditedDate" Type="datetime" />
           <Property Name="RowIDEmployeeCreated" Type="int" />
           <Property Name="RowIDEmployeeEdited" Type="int" />
+          <Property Name="Category" Type="nvarchar" MaxLength="500" />
+          <Property Name="Item" Type="nvarchar" MaxLength="500" />
+          <Property Name="Supplier" Type="nvarchar" MaxLength="500" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="UnitPrice" Type="bigint" />
+          <Property Name="Quantity" Type="float" />
+          <Property Name="Status" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Salaries">
           <Key>
@@ -1872,6 +1879,13 @@
           <NavigationProperty Name="Employee" Relationship="VPK_ERPModel.FK_ReceiptLine_Employees" FromRole="ReceiptLine" ToRole="Employee" />
           <NavigationProperty Name="Employee1" Relationship="VPK_ERPModel.FK_ReceiptLine_Employees1" FromRole="ReceiptLine" ToRole="Employee" />
           <NavigationProperty Name="ReceiptHeader" Relationship="VPK_ERPModel.FK_ReceiptLine_ReceiptHeader" FromRole="ReceiptLine" ToRole="ReceiptHeader" />
+          <Property Name="Category" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Item" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Supplier" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnitPrice" Type="Int64" />
+          <Property Name="Quantity" Type="Double" />
+          <Property Name="Status" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Building_Employees">
           <End Type="VPK_ERPModel.Employee" Role="Employee" Multiplicity="0..1" />
@@ -2436,6 +2450,13 @@
           <EntitySetMapping Name="ReceiptLines">
             <EntityTypeMapping TypeName="VPK_ERPModel.ReceiptLine">
               <MappingFragment StoreEntitySet="ReceiptLine">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="RowIDEmployeeEdited" ColumnName="RowIDEmployeeEdited" />
                 <ScalarProperty Name="RowIDEmployeeCreated" ColumnName="RowIDEmployeeCreated" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />

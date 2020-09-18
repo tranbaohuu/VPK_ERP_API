@@ -26,10 +26,7 @@ namespace VPK_ERP_API.Controllers
         public IHttpActionResult DanhSachKhachHang()
         {
 
-
-
-
-            var listCustomers = db.Customers.ToArray().Select(s => new
+            var listCustomers = db.Customers.Where(w => w.IsDelete == false).ToArray().Select(s => new
             {
                 s.RowID,
                 s.FullName,
@@ -113,42 +110,42 @@ namespace VPK_ERP_API.Controllers
             try
             {
 
-            
-
-                    var model = db.Customers.Where(w => w.RowID == c.RowID).FirstOrDefault();
 
 
-                    if (model != null)
+                var model = db.Customers.Where(w => w.RowID == c.RowID).FirstOrDefault();
+
+
+                if (model != null)
+                {
+
+                    model.FullName = c.FullName;
+                    model.Sex = c.Sex;
+                    model.IDCardNo = c.IDCardNo;
+                    model.Phone = c.Phone;
+                    model.BirthDay = c.BirthDay;
+                    model.Address = c.Address;
+
+
+                    var affected = db.SaveChanges();
+
+                    if (affected > 0)
                     {
-
-                        model.FullName = c.FullName;
-                        model.Sex = c.Sex;
-                        model.IDCardNo = c.IDCardNo;
-                        model.Phone = c.Phone;
-                        model.BirthDay = c.BirthDay;
-                        model.Address = c.Address;
-
-
-                        var affected = db.SaveChanges();
-
-                        if (affected > 0)
-                        {
-                            return Ok("Đã chỉnh sửa thành công");
-                        }
-                        else
-                        {
-                            return BadRequest("Không thành công");
-                        }
-
+                        return Ok("Đã chỉnh sửa thành công");
                     }
                     else
                     {
-                        return BadRequest("Không tìm thấy thông tin khách hàng");
+                        return BadRequest("Không thành công");
                     }
 
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy thông tin khách hàng");
+                }
 
 
-            
+
+
             }
             catch (Exception ex)
             {

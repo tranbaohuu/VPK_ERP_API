@@ -26,7 +26,7 @@ namespace VPK_ERP_API.Controllers
 
 
 
-            var listContracts = db.Contracts.Where(w => w.RowIDBuilding == c.RowID).ToList().Select(s => new
+            var listContracts = db.Contracts.Where(w => w.RowIDBuilding == c.RowID && w.IsDelete == false).ToList().Select(s => new
             {
                 s.RowID,
                 s.ContractCode,
@@ -113,6 +113,7 @@ namespace VPK_ERP_API.Controllers
                     objContract.ContractCode = b.ContractCode;
                     objContract.ContractType = b.ContractType;
                     objContract.ContractPrice = b.ContractPrice;
+                    objContract.RowIDEmployeeEdited = b.RowIDEmployeeEdited;
                     objContract.SignDate = b.SignDate;
 
                     int affected = db.SaveChanges();
@@ -145,6 +146,57 @@ namespace VPK_ERP_API.Controllers
 
 
         }
+
+
+
+        [HttpPost]
+        [Route("api/xoa-hop-dong")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult XoaHopDong(Contract b)
+        {
+
+            try
+            {
+
+
+                var objContract = db.Contracts.Where(w => w.RowID == b.RowID).FirstOrDefault();
+
+                if (objContract != null)
+                {
+                    objContract.IsDelete = true;
+                    objContract.RowIDEmployeeEdited = b.RowIDEmployeeEdited;
+
+                    int affected = db.SaveChanges();
+
+                    if (affected > 0)
+                    {
+
+                        return Ok("Đã xoá thành công");
+
+
+                    }
+                    else
+                    {
+                        return BadRequest("Xoá không thành công");
+                    }
+
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy thông tin");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Lỗi nặng: " + ex.StackTrace);
+
+            }
+
+
+        }
+
 
 
 

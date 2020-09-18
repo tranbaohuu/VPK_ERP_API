@@ -33,7 +33,7 @@ namespace VPK_ERP_API.Controllers
 
 
 
-            var listBuildings = db.Customer_Building.ToList().Select(s => new
+            var listBuildings = db.Customer_Building.Where(w => w.IsDelete == false).ToList().Select(s => new
             {
                 s.Building.RowID,
                 s.Building.Code,

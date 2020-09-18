@@ -24,6 +24,13 @@ namespace VPK_ERP_API.Models
         public Nullable<System.DateTime> EditedDate { get; set; }
         public Nullable<int> RowIDEmployeeCreated { get; set; }
         public Nullable<int> RowIDEmployeeEdited { get; set; }
+        public string Category { get; set; }
+        public string Item { get; set; }
+        public string Supplier { get; set; }
+        public string Unit { get; set; }
+        public Nullable<long> UnitPrice { get; set; }
+        public Nullable<double> Quantity { get; set; }
+        public string Status { get; set; }
     
         public virtual Contract Contract { get; set; }
         public virtual Employee Employee { get; set; }
