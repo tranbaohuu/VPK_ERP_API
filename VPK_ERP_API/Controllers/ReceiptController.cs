@@ -122,6 +122,7 @@ namespace VPK_ERP_API.Controllers
                         rl.TotalPrice = item.TotalPrice;
                         rl.CreatedDate = DateTime.Now;
 
+
                         db.ReceiptLines.Add(rl);
                     }
 
@@ -212,7 +213,13 @@ namespace VPK_ERP_API.Controllers
                 rl.Description = c.GhiChu;
                 rl.TotalPrice = c.ThanhTien;
                 rl.CreatedDate = DateTime.Now;
-
+                rl.Status = c.TinhTrang;
+                rl.Supplier = c.NhaCungCap;
+                rl.Unit = c.DonVi;
+                rl.UnitPrice = c.GiaTien;
+                rl.Quantity = c.SoLuong;
+                rl.Item = c.NhomSanPham;
+                rl.Category = c.HangMuc;
 
                 db.ReceiptLines.Add(rl);
 
@@ -289,6 +296,44 @@ namespace VPK_ERP_API.Controllers
         }
 
 
+
+
+
+
+        [HttpGet]
+        //[ResponseType(typeof(Building))]
+        [Route("api/danh-sach-phieu-chi")]
+        public IHttpActionResult DanhSachToanBoPhieuChiHeaderVaDetail()
+        {
+
+
+
+
+            var listOfReceiptHeaderAndLine = db.ReceiptHeaders.Join(db.ReceiptLines, h => h.RowID, l => l.RowIDReceiptHeader, (h, l) => new { h, l }).Select(s => new
+            {
+
+                s.l.RowID,
+                s.l.Status,
+                s.l.TotalPrice,
+                s.l.CreatedDate,
+                s.l.Supplier,
+                s.l.Unit,
+                s.l.UnitPrice,
+                s.l.Quantity,
+                s.l.Item,
+                s.l.Category
+
+                //ListOfReceipLine = s.ReceiptLines.Select(s2 => new { s2.RowID, s2.Description, s2.RowIDContract }).ToList()
+
+
+            }).OrderByDescending(o => o.RowID).ToList();
+
+
+
+
+            return Ok(listOfReceiptHeaderAndLine);
+
+        }
 
     }
 }
