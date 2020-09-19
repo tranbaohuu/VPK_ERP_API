@@ -309,24 +309,32 @@ namespace VPK_ERP_API.Controllers
 
 
 
-            var listOfReceiptHeaderAndLine = db.ReceiptHeaders.Join(db.ReceiptLines, h => h.RowID, l => l.RowIDReceiptHeader, (h, l) => new { h, l }).Select(s => new
-            {
-
-                s.l.RowID,
-                s.l.Status,
-                s.l.TotalPrice,
-                s.l.CreatedDate,
-                s.l.Supplier,
-                s.l.Unit,
-                s.l.UnitPrice,
-                s.l.Quantity,
-                s.l.Item,
-                s.l.Category
-
-                //ListOfReceipLine = s.ReceiptLines.Select(s2 => new { s2.RowID, s2.Description, s2.RowIDContract }).ToList()
+            var listOfReceiptHeaderAndLine = db.ReceiptHeaders
+                .Join(db.ReceiptLines, h => h.RowID, l => l.RowIDReceiptHeader, (h, l) => new { h, l })
+                .Join(db.Buildings, h2 => h2.h.RowIDBuilding, b => b.RowID, (h2, b) => new { h2, b })
 
 
-            }).OrderByDescending(o => o.RowID).ToList();
+                .Select(s => new
+                {
+
+                    s.h2.l.RowID,
+                    s.h2.l.Status,
+                    s.h2.l.TotalPrice,
+                    s.h2.l.CreatedDate,
+                    s.h2.l.Supplier,
+                    s.h2.l.Unit,
+                    s.h2.l.UnitPrice,
+                    s.h2.l.Quantity,
+                    s.h2.l.Item,
+                    s.h2.l.Category,
+                    s.b.Code,
+                    s.h2.l.Description
+
+
+                    //ListOfReceipLine = s.ReceiptLines.Select(s2 => new { s2.RowID, s2.Description, s2.RowIDContract }).ToList()
+
+
+                }).OrderByDescending(o => o.RowID).ToList();
 
 
 
