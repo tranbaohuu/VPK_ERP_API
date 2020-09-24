@@ -307,6 +307,7 @@
           <Property Name="UnitPrice" Type="bigint" />
           <Property Name="Quantity" Type="float" />
           <Property Name="Status" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Salaries">
           <Key>
@@ -1886,6 +1887,7 @@
           <Property Name="UnitPrice" Type="Int64" />
           <Property Name="Quantity" Type="Double" />
           <Property Name="Status" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Building_Employees">
           <End Type="VPK_ERPModel.Employee" Role="Employee" Multiplicity="0..1" />
@@ -2450,6 +2452,7 @@
           <EntitySetMapping Name="ReceiptLines">
             <EntityTypeMapping TypeName="VPK_ERPModel.ReceiptLine">
               <MappingFragment StoreEntitySet="ReceiptLine">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />

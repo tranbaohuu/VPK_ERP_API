@@ -312,8 +312,7 @@ namespace VPK_ERP_API.Controllers
             var listOfReceiptHeaderAndLine = db.ReceiptHeaders
                 .Join(db.ReceiptLines, h => h.RowID, l => l.RowIDReceiptHeader, (h, l) => new { h, l })
                 .Join(db.Buildings, h2 => h2.h.RowIDBuilding, b => b.RowID, (h2, b) => new { h2, b })
-
-
+                .Where(w => w.h2.l.IsDeleted == false)
                 .Select(s => new
                 {
 
@@ -342,6 +341,57 @@ namespace VPK_ERP_API.Controllers
             return Ok(listOfReceiptHeaderAndLine);
 
         }
+
+
+
+
+        [HttpPost]
+        //[ResponseType(typeof(Building))]
+        [Route("api/xoa-phieu-chi")]
+        //[EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult XoaPhieuChi(PhieuChiThu c)
+        {
+
+            if (c.RowID > 0)
+            {
+
+                var objPhieuChi = db.ReceiptLines.Where(w => w.RowID == c.RowID).FirstOrDefault();
+
+
+                if (objPhieuChi != null)
+                {
+                    objPhieuChi.IsDeleted = true;
+                    objPhieuChi.RowIDEmployeeEdited = c.RowIDEmployeeEdited;
+
+                    int count = db.SaveChanges();
+                    if (count > 0)
+                    {
+                        return Ok("Xoá thành công !");
+
+                    }
+                    else
+                    {
+                        return BadRequest("Xoá thất bại !");
+
+                    }
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy phiếu !");
+                }
+
+
+
+
+
+            }
+            else
+            {
+                return BadRequest("Tham số truyền vào không đúng !");
+            }
+
+        }
+
 
     }
 }
