@@ -155,6 +155,60 @@ namespace VPK_ERP_API.Controllers
 
 
         }
+
+
+
+        [HttpPost]
+        //[ResponseType(typeof(Building))]
+        [Route("api/xoa-khach-hang")]
+        //[EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult XoaKhachHang(Customer c)
+        {
+
+            if (c.RowID > 0)
+            {
+
+                var objPhieuChi = db.Customers.Where(w => w.RowID == c.RowID).FirstOrDefault();
+
+
+                if (objPhieuChi != null)
+                {
+                    objPhieuChi.IsDelete = true;
+                    objPhieuChi.RowIDEmployeeEdited = c.RowIDEmployeeEdited;
+
+                    int count = db.SaveChanges();
+                    if (count > 0)
+                    {
+                        return Ok("Xoá thành công !");
+
+                    }
+                    else
+                    {
+                        return BadRequest("Xoá thất bại !");
+
+                    }
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy phiếu !");
+                }
+
+
+
+
+
+            }
+            else
+            {
+                return BadRequest("Tham số truyền vào không đúng !");
+            }
+
+        }
+
+
     }
+
+
+
 
 }

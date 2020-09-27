@@ -65,7 +65,7 @@ namespace VPK_ERP_API.Controllers
 
 
 
-            var listBuildings = db.Customer_Building.Where(w => w.RowIDCustomer == c.RowID).ToList().Select(s => new
+            var listBuildings = db.Customer_Building.Where(w => w.RowIDCustomer == c.RowID && w.IsDelete == false).ToList().Select(s => new
             {
                 s.Building.RowID,
                 s.Building.Code,
