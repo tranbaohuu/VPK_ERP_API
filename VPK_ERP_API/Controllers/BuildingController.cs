@@ -97,7 +97,7 @@ namespace VPK_ERP_API.Controllers
         [Route("api/chi-tiet-cong-trinh")]
         public IHttpActionResult ChiTietCongTrinh(Building b)
         {
-            var data = db.Buildings.Where(w => w.RowID == b.RowID).Select(s => new
+            var data = db.Buildings.Where(w => w.RowID == b.RowID && w.IsDelete == false).Select(s => new
             {
                 s.RowID,
                 s.Code,
@@ -239,6 +239,57 @@ namespace VPK_ERP_API.Controllers
 
             }
 
+
+        }
+
+
+        [HttpPost]
+        //[ResponseType(typeof(Building))]
+        [Route("api/xoa-cong-trinh")]
+        public IHttpActionResult XoaCongTrinh(Building c)
+        {
+
+            if (c.RowID > 0)
+            {
+
+                var objCongTrinh = db.Buildings.Where(w => w.RowID == c.RowID).FirstOrDefault();
+
+                var objCongTrinhCuaKhach = db.Customer_Building.Where(w => w.RowIDBuilding == c.RowID).FirstOrDefault();
+
+
+                if (objCongTrinh != null && objCongTrinhCuaKhach != null)
+                {
+                    objCongTrinh.IsDelete = true;
+                    objCongTrinh.RowIDEmployeeEdited = c.RowIDEmployeeEdited;
+                    objCongTrinhCuaKhach.IsDelete = true;
+                    objCongTrinhCuaKhach.RowIDEmployeeEdited = c.RowIDEmployeeEdited;
+
+                    int count = db.SaveChanges();
+                    if (count > 0)
+                    {
+                        return Ok("Xoá thành công !");
+
+                    }
+                    else
+                    {
+                        return BadRequest("Xoá thất bại !");
+
+                    }
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy thông tin !");
+                }
+
+
+
+
+
+            }
+            else
+            {
+                return BadRequest("Tham số truyền vào không đúng !");
+            }
 
         }
     }
