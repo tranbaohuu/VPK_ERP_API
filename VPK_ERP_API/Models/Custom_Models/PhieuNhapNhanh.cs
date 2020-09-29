@@ -15,7 +15,7 @@ namespace VPK_ERP_API.Models.Custom_Models
         public int RowIDCongTrinh { get; set; }
         public string DonVi { get; set; }
         public long GiaTien { get; set; }
-        public int SoLuong { get; set; }
+        public double SoLuong { get; set; }
         public long ThanhTien { get; set; }
         public string TinhTrang { get; set; }
         public string GhiChu { get; set; }
