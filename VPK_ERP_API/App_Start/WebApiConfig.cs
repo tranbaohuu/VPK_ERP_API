@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using VPK_ERP_API.Controllers;
+using VPK_ERP_API.Models;
 using VPK_ERP_API.Utilities;
 
 namespace VPK_ERP_API
@@ -10,6 +12,10 @@ namespace VPK_ERP_API
     {
         public static void Register(HttpConfiguration config)
         {
+
+
+            //EmployeesController em = new EmployeesController();
+            //var layChuoi = em.ChayMatKhau("vpk@123");
 
             //Toolkits t = new Toolkits();
             //t.Select_All_Menu2_Huu_2(4);

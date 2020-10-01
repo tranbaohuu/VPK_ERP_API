@@ -155,6 +155,19 @@ namespace VPK_ERP_API.Controllers
 
 
 
+        public string ChayMatKhau(string matkhau)
+        {
+            string password = matkhau;
+
+
+
+            return password = MyHmac.EncryptString("09330F0EF215D6F2257A5EE4EB5B8D2C", password);
+
+
+        }
+
+
+
 
         [HttpGet]
         [ResponseType(typeof(Employee))]
@@ -263,7 +276,7 @@ namespace VPK_ERP_API.Controllers
                 var gioVaoTreNhat = listGioVao1Ngay.Count >= 2 ? listGioVao1Ngay.LastOrDefault() : null;
 
                 var gioRaSomNhat = listGioRa1Ngay.FirstOrDefault();
-                var gioRaTreNhat =  listGioRa1Ngay.Count >= 2  ?listGioRa1Ngay.LastOrDefault() : null;
+                var gioRaTreNhat = listGioRa1Ngay.Count >= 2 ? listGioRa1Ngay.LastOrDefault() : null;
 
 
                 listGioVaoSomNhat.Add(new ChiTietChamCong()
