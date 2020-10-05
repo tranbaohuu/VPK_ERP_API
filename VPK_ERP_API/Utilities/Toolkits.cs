@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -97,5 +98,116 @@ namespace VPK_ERP_API.Utilities
 
 
 
+        public double TinhToanGiaCongTrinh(double giaTienThietKeKienTruc, double giaTienThietKeNoiThat, double dienTich, bool IsThietKeKienTruc, bool IsThietKeNoiThat, bool IsThietKeTronGoi, bool IsTanCoDien)
+        {
+            double tongTienThietKeKienTruc = 0;
+            double tongTienThietKeNoiThat = 0;
+
+            double tongTienCuoiCung = 0;
+
+
+            #region "Thiết kế kiến trúc"
+            //tính ra diện tích
+
+            if (dienTich > 0 && dienTich < 250)
+            {
+
+
+                tongTienThietKeKienTruc = giaTienThietKeKienTruc * dienTich * 1.1;
+
+
+            }
+            else
+            {
+
+                if (dienTich >= 450 && dienTich <= 900)
+                {
+                    tongTienThietKeKienTruc = giaTienThietKeKienTruc * dienTich * 0.9;
+
+                }
+                else
+                {
+
+                    tongTienThietKeKienTruc = -1;
+
+                }
+
+            }
+
+
+
+            if (IsTanCoDien == true)
+            {
+
+                tongTienThietKeKienTruc = tongTienThietKeKienTruc * 1.2;
+            }
+
+
+            #endregion
+
+
+
+            #region "Thiết kế nội thất"
+            //tính ra diện tích
+
+            if (dienTich > 0 && dienTich < 250)
+            {
+
+
+                tongTienThietKeNoiThat = giaTienThietKeNoiThat * dienTich * 1.1;
+
+
+            }
+            else
+            {
+
+                if (dienTich >= 450 && dienTich <= 900)
+                {
+                    tongTienThietKeNoiThat = giaTienThietKeNoiThat * dienTich * 0.9;
+
+                }
+                else
+                {
+
+                    tongTienThietKeNoiThat = -1;
+
+                }
+
+            }
+
+
+
+            if (IsTanCoDien == true)
+            {
+
+                tongTienThietKeNoiThat = tongTienThietKeNoiThat * 1.2;
+            }
+
+
+            #endregion
+
+
+
+
+            tongTienCuoiCung = tongTienThietKeKienTruc + tongTienThietKeNoiThat;
+
+
+
+
+            return Math.Round(tongTienCuoiCung, 0);
+
+
+
+
+
+        }
+
+
+
+
     }
+
+
+
+
 }

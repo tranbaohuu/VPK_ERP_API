@@ -12,7 +12,18 @@ namespace VPK_ERP_API
         {
 
             //Toolkits t = new Toolkits();
-            //t.Select_All_Menu2_Huu_2(4);
+            ////t.Select_All_Menu2_Huu_2(4);
+
+
+            ////nếu  ra số âm là giá thương lượng
+            //var total = t.TinhToanGiaCongTrinh(
+            //      120000 /*Gia tiền thiết kế kiến trúc*/,
+            //      120000 /*Giá tiền thiết kế nội thất*/,
+            //      555 /*Diện tích*/, true /*Có thiết kế kiến trúc*/,
+            //      true /*Có thiết kế nội thất*/,
+            //      false /*Có thiết kế trọn gói*/,
+            //      false /*Có thiết kế tân cổ điển*/);
+
 
 
             // New code
