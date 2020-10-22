@@ -108,40 +108,50 @@ namespace VPK_ERP_API.Utilities
 
             #region "Thiết kế kiến trúc"
             //tính ra diện tích
-
-            if (dienTich > 0 && dienTich < 250)
+            if (IsThietKeKienTruc == true)
             {
-
-
-                tongTienThietKeKienTruc = giaTienThietKeKienTruc * dienTich * 1.1;
-
-
-            }
-            else
-            {
-
-                if (dienTich >= 450 && dienTich <= 900)
+                if (dienTich >= 150 && dienTich <= 250)
                 {
-                    tongTienThietKeKienTruc = giaTienThietKeKienTruc * dienTich * 0.9;
+
+
+                    tongTienThietKeKienTruc = giaTienThietKeKienTruc * dienTich * 1;
+
 
                 }
                 else
                 {
+                    if (dienTich >= 250 && dienTich <= 450)
+                    {
+                        tongTienThietKeKienTruc = giaTienThietKeKienTruc * dienTich * 1.1;
 
-                    tongTienThietKeKienTruc = -1;
+                    }
+                    else
+                    {
+
+                        if (dienTich >= 450 && dienTich <= 900)
+                        {
+                            tongTienThietKeKienTruc = giaTienThietKeKienTruc * dienTich * 0.9;
+
+                        }
+                        else
+                        {
+
+                            tongTienThietKeKienTruc = -1;
+
+                        }
+                    }
 
                 }
 
+
+
+                if (IsTanCoDien == true)
+                {
+
+                    tongTienThietKeKienTruc = tongTienThietKeKienTruc * 1.2;
+                }
+
             }
-
-
-
-            if (IsTanCoDien == true)
-            {
-
-                tongTienThietKeKienTruc = tongTienThietKeKienTruc * 1.2;
-            }
-
 
             #endregion
 
@@ -150,39 +160,54 @@ namespace VPK_ERP_API.Utilities
             #region "Thiết kế nội thất"
             //tính ra diện tích
 
-            if (dienTich > 0 && dienTich < 250)
+            if (IsThietKeNoiThat == true)
             {
-
-
-                tongTienThietKeNoiThat = giaTienThietKeNoiThat * dienTich * 1.1;
-
-
-            }
-            else
-            {
-
-                if (dienTich >= 450 && dienTich <= 900)
+                if (dienTich >= 150 && dienTich <= 250)
                 {
-                    tongTienThietKeNoiThat = giaTienThietKeNoiThat * dienTich * 0.9;
+
+
+                    tongTienThietKeNoiThat = giaTienThietKeNoiThat * dienTich * 1;
+
 
                 }
                 else
                 {
 
-                    tongTienThietKeNoiThat = -1;
+                    if (dienTich >= 250 && dienTich <= 450)
+                    {
 
+
+                        tongTienThietKeNoiThat = giaTienThietKeNoiThat * dienTich * 1.1;
+
+
+                    }
+                    else
+                    {
+
+                        if (dienTich >= 450 && dienTich <= 900)
+                        {
+                            tongTienThietKeNoiThat = giaTienThietKeNoiThat * dienTich * 0.9;
+
+                        }
+                        else
+                        {
+
+                            tongTienThietKeNoiThat = -1;
+
+                        }
+
+                    }
+                }
+
+
+
+                if (IsTanCoDien == true)
+                {
+
+                    tongTienThietKeNoiThat = tongTienThietKeNoiThat * 1.2;
                 }
 
             }
-
-
-
-            if (IsTanCoDien == true)
-            {
-
-                tongTienThietKeNoiThat = tongTienThietKeNoiThat * 1.2;
-            }
-
 
             #endregion
 
