@@ -24,13 +24,13 @@ namespace VPK_ERP_API.Controllers
         [HttpPost]
         //[ResponseType(typeof(Building))]
         [Route("api/danh-sach-phieu-thu-theo-cong-trinh")]
-        public IHttpActionResult DanhSachPhieuThuTheoCongTrinh(Building c)
+        public IHttpActionResult DanhSachPhieuThuTheoCongTrinh(ReceiptHeader c)
         {
 
 
 
 
-            var listOfReceiptHeaderAndLine = db.ReceiptHeaders.Where(w => w.RowIDBuilding == c.RowID).ToList().Select(s => new
+            var listOfReceiptHeaderAndLine = db.ReceiptHeaders.Where(w => w.RowIDBuilding == c.RowIDBuilding && w.Type == c.Type).ToList().Select(s => new
             {
                 s.RowID,
                 s.Code,
