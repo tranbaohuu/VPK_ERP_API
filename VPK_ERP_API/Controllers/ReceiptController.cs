@@ -358,6 +358,35 @@ namespace VPK_ERP_API.Controllers
                    s.h2.l.Category,
                    s.b.Code,
                    RowIDBuilding = s.b.RowID,
+                   Customer = s.b.Customer_Building.Select(s2 => new Child_Customer
+                   {
+
+                       FullName = s2.Customer.FullName,
+                       FullNameEnglish = s2.Customer.FullNameEnglish,
+                       Sex = s2.Customer.Sex,
+                       BirthDay = s2.Customer.BirthDay,
+                       Age = s2.Customer.Age,
+                       Address = s2.Customer.Address,
+                       WardID = s2.Customer.WardID,
+                       DistrictID = s2.Customer.DistrictID,
+                       CityID = s2.Customer.CityID,
+                       Phone = s2.Customer.Phone,
+                       Email = s2.Customer.Email,
+                       Picture = s2.Customer.Picture,
+                       CreatedDate = s2.Customer.CreatedDate,
+                       EditedDate = s2.Customer.EditedDate,
+                       EmployeeID = s2.Customer.EmployeeID,
+                       IsDelete = s2.Customer.IsDelete,
+                       TaxCode = s2.Customer.TaxCode,
+                       IDCardNo = s2.Customer.IDCardNo,
+                       DateOfIssue = s2.Customer.DateOfIssue,
+                       PlaceOfIssue = s2.Customer.PlaceOfIssue,
+                       IsActive = s2.Customer.IsActive,
+                       RowID = s2.Customer.RowID,
+                       RowIDEmployeeCreated = s2.Customer.RowIDEmployeeCreated,
+                       RowIDEmployeeEdited = s2.Customer.RowIDEmployeeEdited
+
+                   }).FirstOrDefault(),
                    s.h2.l.Description,
                    FullName = s.b.Customer_Building.Select(s1 => s1.Customer.FullName).FirstOrDefault()
 
