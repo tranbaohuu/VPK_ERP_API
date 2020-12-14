@@ -357,6 +357,7 @@ namespace VPK_ERP_API.Controllers
                    s.h2.l.Item,
                    s.h2.l.Category,
                    s.b.Code,
+                   RowIDBuilding = s.b.RowID,
                    s.h2.l.Description,
                    FullName = s.b.Customer_Building.Select(s1 => s1.Customer.FullName).FirstOrDefault()
 
