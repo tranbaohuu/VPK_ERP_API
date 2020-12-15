@@ -66,6 +66,10 @@ namespace VPK_ERP_API.Controllers
                 s.Times,
                 s.TotalPrice,
                 s.CreatedDate,
+                s.Category,
+                s.Item,
+                s.Unit,
+                s.Supplier,
                 ContractCode = (s.Contract != null ? s.Contract.ContractCode : ""),
                 RowIDContract = (s.Contract != null ? s.Contract.RowID : -1)
 
