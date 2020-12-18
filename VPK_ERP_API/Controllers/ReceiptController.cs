@@ -388,11 +388,34 @@ namespace VPK_ERP_API.Controllers
                        IsActive = s2.Customer.IsActive,
                        RowID = s2.Customer.RowID,
                        RowIDEmployeeCreated = s2.Customer.RowIDEmployeeCreated,
-                       RowIDEmployeeEdited = s2.Customer.RowIDEmployeeEdited
+                       RowIDEmployeeEdited = s2.Customer.RowIDEmployeeEdited,
 
-                   }).FirstOrDefault(),
+
+
+                   }
+
+
+                   ).FirstOrDefault(),
                    s.h2.l.Description,
-                   FullName = s.b.Customer_Building.Select(s1 => s1.Customer.FullName).FirstOrDefault()
+                   FullName = s.b.Customer_Building.Select(s1 => s1.Customer.FullName).FirstOrDefault(),
+                   //của receiptline
+                   RowIDReceiptLine = s.h2.h.ReceiptLines.Select(s3 => s3.RowID).FirstOrDefault(),
+
+                   //  s.ReceiptHeader.Code,
+                   //DescriptionReceiptHeader = s.ReceiptHeader.Description,
+                   //s.RowID,
+                   //s.Description,
+                   //s.Times,
+                   //s.TotalPrice,
+                   //s.CreatedDate,
+                   //s.Category,
+                   //s.Item,
+                   //s.Unit,
+                   //s.Supplier,
+                   //ContractCode = (s.Contract != null ? s.Contract.ContractCode : ""),
+                   //RowIDContract = (s.Contract != null ? s.Contract.RowID : -1)
+
+
 
 
                    //ListOfReceipLine = s.ReceiptLines.Select(s2 => new { s2.RowID, s2.Description, s2.RowIDContract }).ToList()
