@@ -62,7 +62,21 @@ namespace VPK_ERP_API.Controllers
                     b.IsDelete = false;
                     b.CreatedDate = DateTime.Now;
 
+
+                    int TongSoContract = db.Contracts.Where(w => w.RowIDBuilding == b.RowIDBuilding).Count();
+
+                    string mact = db.Buildings.Where(w => w.RowID == b.RowIDBuilding).Select(s => s.Code).FirstOrDefault();
+
+                    b.ContractCode = mact + "_" + (TongSoContract.ToString().Count() == 1 ? TongSoContract.ToString().PadLeft(3, '0') : TongSoContract.ToString().PadLeft(2, '0'));
+
+
+
                     db.Contracts.Add(b);
+
+
+
+
+
                     int affected = db.SaveChanges();
 
                     if (affected > 0)
