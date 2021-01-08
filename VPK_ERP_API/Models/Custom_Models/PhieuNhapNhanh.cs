@@ -22,6 +22,9 @@ namespace VPK_ERP_API.Models.Custom_Models
         public int EmployeeID { get; set; }
 
 
+        public int ReceiptType { get; set; }
+
+
 
 
 

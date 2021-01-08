@@ -57,7 +57,7 @@ namespace VPK_ERP_API.Controllers
         [Route("api/danh-sach-chi-tiet-phieu")]
         public IHttpActionResult DanhSachChiTietPhieuTheoRowIDReceiptHeader(ReceiptHeader c)
         {
-            var listOfReceiptHeaderAndLine = db.ReceiptLines.Where(w => w.RowIDReceiptHeader == c.RowID).ToList().Select(s => new
+            var listOfReceiptHeaderAndLine = db.ReceiptLines.Where(w => w.ReceiptHeader.RowIDBuilding == c.RowIDBuilding && w.ReceiptHeader.Type == c.Type).Select(s => new
             {
                 s.ReceiptHeader.Code,
                 DescriptionReceiptHeader = s.ReceiptHeader.Description,
@@ -181,7 +181,7 @@ namespace VPK_ERP_API.Controllers
                 rh.RowIDBuilding = c.RowIDCongTrinh;
 
                 rh.CreatedDate = DateTime.Now;
-                rh.Type = 1;
+                rh.Type = c.ReceiptType;
 
                 db.ReceiptHeaders.Add(rh);
 
@@ -215,7 +215,7 @@ namespace VPK_ERP_API.Controllers
                 rl.RowIDEmployeeCreated = c.EmployeeID;
                 rl.Times = null;
                 rl.Description = c.GhiChu;
-                rl.TotalPrice = c.ThanhTien;
+                rl.TotalPrice = long.Parse((double.Parse(c.GiaTien.ToString()) * c.SoLuong).ToString());
                 rl.CreatedDate = DateTime.Now;
                 rl.Status = c.TinhTrang;
                 rl.Supplier = c.NhaCungCap;
@@ -307,46 +307,15 @@ namespace VPK_ERP_API.Controllers
         [HttpGet]
         //[ResponseType(typeof(Building))]
         [Route("api/danh-sach-phieu-chi")]
-        public IHttpActionResult DanhSachToanBoPhieuChiHeaderVaDetail()
+        public IHttpActionResult DanhSachToanBoPhieuChiHeaderVaDetail(int ReceiptType)
         {
-
-
-
-
-            //var listOfReceiptHeaderAndLine = db.ReceiptHeaders
-            //    .Join(db.ReceiptLines, h => h.RowID, l => l.RowIDReceiptHeader, (h, l) => new { h, l })
-            //    .Join(db.Buildings, h2 => h2.h.RowIDBuilding, b => b.RowID, (h2, b) => new { h2, b })
-            //    .Where(w => w.h2.l.IsDeleted == false)
-            //    .Select(s => new
-            //    {
-
-            //        s.h2.l.RowID,
-            //        s.h2.l.Status,
-            //        s.h2.l.TotalPrice,
-            //        s.h2.l.CreatedDate,
-            //        s.h2.l.Supplier,
-            //        s.h2.l.Unit,
-            //        s.h2.l.UnitPrice,
-            //        s.h2.l.Quantity,
-            //        s.h2.l.Item,
-            //        s.h2.l.Category,
-            //        s.b.Code,
-            //        s.h2.l.Description
-
-
-            //        //ListOfReceipLine = s.ReceiptLines.Select(s2 => new { s2.RowID, s2.Description, s2.RowIDContract }).ToList()
-
-
-            //    }).OrderByDescending(o => o.RowID).ToList();
-
-
 
 
 
             var listOfReceiptHeaderAndLine = db.ReceiptHeaders
                .Join(db.ReceiptLines, h => h.RowID, l => l.RowIDReceiptHeader, (h, l) => new { h, l })
                .Join(db.Buildings, h2 => h2.h.RowIDBuilding, b => b.RowID, (h2, b) => new { h2, b })
-               .Where(w => w.h2.l.IsDeleted == false)
+               .Where(w => w.h2.l.IsDeleted == false && w.h2.h.Type == ReceiptType)
                .Select(s => new
                {
 
