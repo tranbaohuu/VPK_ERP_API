@@ -57,7 +57,7 @@ namespace VPK_ERP_API.Controllers
         [Route("api/danh-sach-chi-tiet-phieu")]
         public IHttpActionResult DanhSachChiTietPhieuTheoRowIDReceiptHeader(ReceiptHeader c)
         {
-            var listOfReceiptHeaderAndLine = db.ReceiptLines.Where(w => w.ReceiptHeader.RowIDBuilding == c.RowIDBuilding && w.ReceiptHeader.Type == c.Type).Select(s => new
+            var listOfReceiptHeaderAndLine = db.ReceiptLines.Where(w => w.ReceiptHeader.RowIDBuilding == c.RowIDBuilding && w.ReceiptHeader.Type == c.Type && w.IsDeleted == false).Select(s => new
             {
                 s.ReceiptHeader.Code,
                 DescriptionReceiptHeader = s.ReceiptHeader.Description,
@@ -180,6 +180,7 @@ namespace VPK_ERP_API.Controllers
                 rh.RowIDEmployeeCreated = c.EmployeeID;
                 rh.RowIDBuilding = c.RowIDCongTrinh;
 
+
                 rh.CreatedDate = DateTime.Now;
                 rh.Type = c.ReceiptType;
 
@@ -224,6 +225,7 @@ namespace VPK_ERP_API.Controllers
                 rl.Quantity = c.SoLuong;
                 rl.Item = c.NhomSanPham;
                 rl.Category = c.HangMuc;
+                rl.RowIDContract = c.RowIDHopDong;
 
                 db.ReceiptLines.Add(rl);
 
@@ -301,6 +303,44 @@ namespace VPK_ERP_API.Controllers
 
 
 
+        [HttpPost]
+        //[ResponseType(typeof(Building))]
+        [Route("api/xoa-chi-tiet-phieu")]
+        public IHttpActionResult XoaChiTietPhieu(PhieuChiThu c)
+        {
+
+            if (c != null)
+            {
+
+
+
+                var objPhieuThu = db.ReceiptLines.Where(w => w.RowID == c.RowID).FirstOrDefault();
+                objPhieuThu.IsDeleted = true;
+                objPhieuThu.EditedDate = DateTime.Now;
+                objPhieuThu.RowIDEmployeeEdited = c.RowIDEmployeeEdited;
+
+                var affected = db.SaveChanges();
+
+
+                if (affected > 0)
+                {
+                    return Ok("Chỉnh sửa phiếu thành công !");
+                }
+                else
+                {
+                    return BadRequest("Chỉnh sửa phiếu thất bại !");
+                }
+
+
+
+            }
+            else
+            {
+                return BadRequest("Không có chi tiết phiếu bên trong một tờ phiếu !");
+            }
+
+        }
+
 
 
 
@@ -363,9 +403,9 @@ namespace VPK_ERP_API.Controllers
 
                    }
 
-
                    ).FirstOrDefault(),
                    s.h2.l.Description,
+                   ContractCode = s.h2.l.Contract.ContractCode + " - " + s.h2.l.Contract.ContractType,
                    FullName = s.b.Customer_Building.Select(s1 => s1.Customer.FullName).FirstOrDefault(),
                    //của receiptline
                    RowIDReceiptLine = s.h2.h.ReceiptLines.Select(s3 => s3.RowID).FirstOrDefault(),

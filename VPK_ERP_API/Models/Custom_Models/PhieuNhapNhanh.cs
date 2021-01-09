@@ -21,7 +21,7 @@ namespace VPK_ERP_API.Models.Custom_Models
         public string GhiChu { get; set; }
         public int EmployeeID { get; set; }
 
-
+        public int RowIDHopDong { get; set; }
         public int ReceiptType { get; set; }
 
 

@@ -33,7 +33,8 @@ namespace VPK_ERP_API.Controllers
                 s.ContractType,
                 s.ContractPrice,
                 SignDate = s.SignDate != null ? s.SignDate.Value.ToString("dd/MM/yyyy") : "",
-                CreatedDate = s.CreatedDate != null ? s.CreatedDate.Value.ToString("dd/MM/yyyy") : ""
+                CreatedDate = s.CreatedDate != null ? s.CreatedDate.Value.ToString("dd/MM/yyyy") : "",
+                ContractCodeAndType = s.ContractCode + " - " + s.ContractType
 
             }).OrderByDescending(o => o.RowID).ToList();
 
