@@ -182,6 +182,14 @@ namespace VPK_ERP_API.Controllers
 
 
                 rh.CreatedDate = DateTime.Now;
+
+
+                string[] mangNgayNhap = c.NgayNhap.Split('/');
+
+                rh.InputDate = new DateTime(int.Parse(mangNgayNhap[2]), int.Parse(mangNgayNhap[1]), int.Parse(mangNgayNhap[0]), 0, 0, 0);
+
+
+
                 rh.Type = c.ReceiptType;
 
                 db.ReceiptHeaders.Add(rh);
@@ -413,7 +421,7 @@ namespace VPK_ERP_API.Controllers
                    FullName = s.b.Customer_Building.Select(s1 => s1.Customer.FullName).FirstOrDefault(),
                    //của receiptline
                    RowIDReceiptLine = s.h2.h.ReceiptLines.Select(s3 => s3.RowID).FirstOrDefault(),
-
+                   NgayNhap = s.h2.h.InputDate
                    //  s.ReceiptHeader.Code,
                    //DescriptionReceiptHeader = s.ReceiptHeader.Description,
                    //s.RowID,

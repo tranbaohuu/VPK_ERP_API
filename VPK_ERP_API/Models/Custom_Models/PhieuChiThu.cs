@@ -21,7 +21,7 @@ namespace VPK_ERP_API.Models.Custom_Models
 
         public List<ReceiptLine> DanhSachChiTietPhieuThu { get; set; }
 
-
+        public string NgayNhap { get; set; }
 
 
     }

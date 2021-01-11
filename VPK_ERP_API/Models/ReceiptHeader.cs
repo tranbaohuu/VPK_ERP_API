@@ -30,6 +30,7 @@ namespace VPK_ERP_API.Models
         public Nullable<int> RowIDEmployeeCreated { get; set; }
         public Nullable<int> RowIDEmployeeEdited { get; set; }
         public Nullable<int> Type { get; set; }
+        public Nullable<System.DateTime> InputDate { get; set; }
     
         public virtual Building Building { get; set; }
         public virtual Customer Customer { get; set; }

@@ -285,6 +285,7 @@
           <Property Name="RowIDEmployeeCreated" Type="int" />
           <Property Name="RowIDEmployeeEdited" Type="int" />
           <Property Name="Type" Type="int" />
+          <Property Name="InputDate" Type="date" />
         </EntityType>
         <EntityType Name="ReceiptLine">
           <Key>
@@ -1861,6 +1862,7 @@
           <NavigationProperty Name="Employee1" Relationship="VPK_ERPModel.FK_ReceiptHeader_Employees1" FromRole="ReceiptHeader" ToRole="Employee" />
           <NavigationProperty Name="ReceiptLines" Relationship="VPK_ERPModel.FK_ReceiptLine_ReceiptHeader" FromRole="ReceiptHeader" ToRole="ReceiptLine" />
           <Property Name="Type" Type="Int32" />
+          <Property Name="InputDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="ReceiptLine">
           <Key>
@@ -2436,6 +2438,7 @@
           <EntitySetMapping Name="ReceiptHeaders">
             <EntityTypeMapping TypeName="VPK_ERPModel.ReceiptHeader">
               <MappingFragment StoreEntitySet="ReceiptHeader">
+                <ScalarProperty Name="InputDate" ColumnName="InputDate" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="RowIDEmployeeEdited" ColumnName="RowIDEmployeeEdited" />
                 <ScalarProperty Name="RowIDEmployeeCreated" ColumnName="RowIDEmployeeCreated" />
