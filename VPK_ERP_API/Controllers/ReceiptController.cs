@@ -225,7 +225,11 @@ namespace VPK_ERP_API.Controllers
                 rl.Quantity = c.SoLuong;
                 rl.Item = c.NhomSanPham;
                 rl.Category = c.HangMuc;
-                rl.RowIDContract = c.RowIDHopDong;
+
+                if (c.RowIDHopDong != 0)
+                {
+                    rl.RowIDContract = c.RowIDHopDong;
+                }
 
                 db.ReceiptLines.Add(rl);
 
