@@ -105,19 +105,22 @@ namespace VPK_ERP_API.Controllers
         [Route("api/tinh-cham-cong")]
         public void TinhToanLuongVaCapNhat()
         {
+            bool flagKhongDuThoiGian = false;
 
 
 
+            var listAllEmployee = db.Employees.Where(w => w.RowID == 3).Select(s => s.RowID).ToList();
 
-            var listAllEmployee = db.Employees.Select(s => s.RowID).ToList();
+            DateTime tungay = new DateTime(2021, 03, 02, 00, 00, 00);
+            DateTime denngay = new DateTime(2021, 03, 02, 23, 59, 59);
+
 
             foreach (var item in listAllEmployee)
             {
 
 
 
-
-                var listAllDays = db.Attendance_Detail.Where(w => w.RowIDEmployee == item).ToList();
+                var listAllDays = db.Attendance_Detail.Where(w => w.RowIDEmployee == item && w.CreatedDate >= tungay && w.CreatedDate <= denngay).ToList();
 
 
                 var listShortDays = listAllDays.Select(s => s.CreatedDate.Value.ToShortDateString()).Distinct().ToList();
@@ -129,23 +132,37 @@ namespace VPK_ERP_API.Controllers
                 {
 
                     var listGioVao1Ngay = listAllDays.Where(w => w.Type == "IN" && w.CreatedDate.Value.ToShortDateString() == soNgay).OrderBy(o => o.CreatedDate).ToList();
-
-
-                    if (listGioVao1Ngay.Count == 0)
-                    {
-
-                        continue;
-                    }
-
-
                     var listGioRa1Ngay = listAllDays.Where(w => w.Type == "OUT" && w.CreatedDate.Value.ToShortDateString() == soNgay).OrderBy(o => o.CreatedDate).ToList();
 
 
-                    if (listGioRa1Ngay.Count == 0)
+                    if (listGioVao1Ngay.Count + listGioRa1Ngay.Count < 4)
                     {
+                        var arrSplitTemp1 = soNgay.Split('/');
+                        DateTime d1 = new DateTime(Int32.Parse(arrSplitTemp1[2]), Int32.Parse(arrSplitTemp1[0]), Int32.Parse(arrSplitTemp1[1]));
 
+                        var temp1 = db.Attendance_Header.Where(w => w.RowIDEmployee == item && w.AttendanceShortDate.Value == d1).FirstOrDefault();
+
+                        temp1.TotalWorkingHours = 0;
+
+                        db.SaveChanges();
                         continue;
                     }
+
+
+
+
+                    //if (listGioRa1Ngay.Count == 2)
+                    //{
+                    //    var arrSplitTemp2 = soNgay.Split('/');
+                    //    DateTime d2 = new DateTime(Int32.Parse(arrSplitTemp2[2]), Int32.Parse(arrSplitTemp2[0]), Int32.Parse(arrSplitTemp2[1]));
+                    //    var temp2 = db.Attendance_Header.Where(w => w.RowIDEmployee == item && w.AttendanceShortDate.Value == d2).FirstOrDefault();
+
+                    //    temp2.TotalWorkingHours = 0;
+
+                    //    db.SaveChanges();
+
+                    //    continue;
+                    //}
 
 
                     var gioVaoSomNhat = listGioVao1Ngay.FirstOrDefault();
