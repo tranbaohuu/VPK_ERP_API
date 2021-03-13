@@ -202,6 +202,113 @@ namespace VPK_ERP_API.Controllers
 
         }
 
+
+
+
+        [HttpGet]
+        [Route("api/tinh-cham-cong-v2")]
+        public void TinhToanLuongVaCapNhat_v2()
+        {
+            bool flagKhongDuThoiGian = false;
+
+
+
+            //var listAllEmployee = db.Employees.Where(w => w.RowID == 3).Select(s => s.RowID).ToList();
+            var listAllEmployee = db.Employees.Select(s => s.RowID).ToList();
+
+            //DateTime tungay = new DateTime(2021, 03, 02, 00, 00, 00);
+            //DateTime denngay = new DateTime(2021, 03, 02, 23, 59, 59);
+
+
+            foreach (var item in listAllEmployee)
+            {
+
+
+
+                //var listAllDays = db.Attendance_Detail.Where(w => w.RowIDEmployee == item && w.CreatedDate >= tungay && w.CreatedDate <= denngay).ToList();
+                var listAllDays = db.Attendance_Detail.Where(w => w.RowIDEmployee == item).ToList();
+
+
+                var listShortDays = listAllDays.Select(s => s.CreatedDate.Value.ToShortDateString()).Distinct().ToList();
+
+
+                Dictionary<string, double> gioLamTrongNGay = new Dictionary<string, double>();
+
+                foreach (var soNgay in listShortDays)
+                {
+
+                    var listGioVao1Ngay = listAllDays.Where(w => w.Type == "IN" && w.CreatedDate.Value.ToShortDateString() == soNgay).OrderBy(o => o.CreatedDate).ToList();
+                    var listGioRa1Ngay = listAllDays.Where(w => w.Type == "OUT" && w.CreatedDate.Value.ToShortDateString() == soNgay).OrderBy(o => o.CreatedDate).ToList();
+
+
+                    if (listGioVao1Ngay.Count < 1)
+                    {
+                        var arrSplitTemp1 = soNgay.Split('/');
+                        DateTime d1 = new DateTime(Int32.Parse(arrSplitTemp1[2]), Int32.Parse(arrSplitTemp1[0]), Int32.Parse(arrSplitTemp1[1]));
+
+                        var temp1 = db.Attendance_Header.Where(w => w.RowIDEmployee == item && w.AttendanceShortDate.Value == d1).FirstOrDefault();
+
+                        temp1.TotalWorkingHours = 0;
+
+                        db.SaveChanges();
+                        continue;
+                    }
+
+
+
+
+                    if (listGioRa1Ngay.Count < 1)
+                    {
+                        var arrSplitTemp2 = soNgay.Split('/');
+                        DateTime d2 = new DateTime(Int32.Parse(arrSplitTemp2[2]), Int32.Parse(arrSplitTemp2[0]), Int32.Parse(arrSplitTemp2[1]));
+                        var temp2 = db.Attendance_Header.Where(w => w.RowIDEmployee == item && w.AttendanceShortDate.Value == d2).FirstOrDefault();
+
+                        temp2.TotalWorkingHours = 0;
+
+                        db.SaveChanges();
+
+                        continue;
+                    }
+
+
+                    var gioVaoSomNhat = listGioVao1Ngay.FirstOrDefault();
+                    //var gioVaoTreNhat = listGioVao1Ngay.LastOrDefault();
+
+                    //var gioRaSomNhat = listGioRa1Ngay.FirstOrDefault();
+                    var gioRaTreNhat = listGioRa1Ngay.LastOrDefault();
+
+                    var soGioLamSang = (gioRaTreNhat.CreatedDate.Value - gioVaoSomNhat.CreatedDate.Value).TotalHours;
+                    //var soGioLamChieu = (gioRaTreNhat.CreatedDate.Value - gioVaoTreNhat.CreatedDate.Value).TotalHours;
+
+                    var tongGio1Ngay = soGioLamSang;
+
+                    gioLamTrongNGay.Add(soNgay, tongGio1Ngay);
+
+
+                    var arrSplit = soNgay.Split('/');
+                    DateTime d = new DateTime(Int32.Parse(arrSplit[2]), Int32.Parse(arrSplit[0]), Int32.Parse(arrSplit[1]));
+
+
+                    var searchobj = db.Attendance_Header.Where(w => w.RowIDEmployee == item && w.AttendanceShortDate.Value == d).FirstOrDefault();
+
+                    searchobj.TotalWorkingHours = tongGio1Ngay;
+
+                    db.SaveChanges();
+
+                }
+
+
+
+                //var listIn = db.Attendance_Detail.Where(w => w.RowIDEmployee == EmployeeID && w.Type == "IN").ToList();
+                //var listOut = db.Attendance_Detail.Where(w => w.RowIDEmployee == EmployeeID && w.Type == "OUT").ToList();
+
+
+            }
+
+
+        }
+
+
     }
 
 }
