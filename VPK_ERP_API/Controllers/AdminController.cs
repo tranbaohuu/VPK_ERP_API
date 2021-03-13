@@ -30,14 +30,17 @@ namespace VPK_ERP_API.Controllers
                 using (var workbook = new XLWorkbook())
                 {
                     var worksheet = workbook.Worksheets.Add("Cham Cong");
-                    worksheet.Cell("A1").Value = "Loại chấm";
-                    worksheet.Cell("B1").Value = "Ngày giờ";
-                    worksheet.Cell("C1").Value = "Ngày giờ";
-                    worksheet.Cell("D1").Value = "Ngày giờ";
-                    worksheet.Cell("E1").Value = "Ngày giờ";
+                    worksheet.Cell("A1").Value = "Họ tên";
+                    worksheet.Cell("B1").Value = "Ngày giờ chấm";
+                    worksheet.Cell("C1").Value = "Vào / Ra";
+                    worksheet.Cell("D1").Value = "Loại chấm";
                     //worksheet.Cell("A2").FormulaA1 = "=MID(A1, 7, 5)";
 
 
+                    worksheet.Columns("B").Style.DateFormat.Format = "yyyy-mm-dd hh:mm:ss";
+
+                    //worksheet.Columns("B").Cells().SetDataType(XLDataType.Text);
+                    //worksheet.Columns("B").Cells().DataType = XLDataType.Text;
 
 
                     var attendance_Detail = db.Attendance_Detail.Include(a => a.AttendanceReason).Include(a => a.Attendance_Header).Include(a => a.Employee);
@@ -47,11 +50,10 @@ namespace VPK_ERP_API.Controllers
 
                     foreach (var item in attendance_Detail)
                     {
-                        worksheet.Cell("A" + count).Value = item.Type;
-                        worksheet.Cell("B" + count).Value = item.CreatedDate.ToString();
-                        worksheet.Cell("C" + count).Value = item.AttendanceReason.Name;
-                        worksheet.Cell("D" + count).Value = item.Employee.Fullname;
-                        worksheet.Cell("E" + count).Value = item.RowIDAttendanceReason.ToString();
+                        worksheet.Cell("A" + count).Value = item.Employee.Fullname;
+                        worksheet.Cell("B" + count).Value = item.CreatedDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                        worksheet.Cell("C" + count).Value = item.Type;
+                        worksheet.Cell("D" + count).Value = item.AttendanceReason.Name;
                         count++;
 
 
@@ -291,7 +293,7 @@ namespace VPK_ERP_API.Controllers
 
                     var searchobj = db.Attendance_Header.Where(w => w.RowIDEmployee == item && w.AttendanceShortDate.Value == d).FirstOrDefault();
 
-                    searchobj.TotalWorkingHours = tongGio1Ngay;
+                    searchobj.TotalWorkingHours = Math.Round(tongGio1Ngay, 2);
 
                     db.SaveChanges();
 
