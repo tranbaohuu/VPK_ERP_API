@@ -2,8 +2,10 @@
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -23,13 +25,19 @@ namespace VPK_ERP_API.Controllers
 
         [HttpGet]
         [Route("api/xuat-cham-cong")]
-        public IHttpActionResult Export_XemChamCong()
+        public IHttpActionResult Export_XemChamCong(DateTime TuNgay, DateTime DenNgay)
         {
             try
             {
                 using (var workbook = new XLWorkbook())
                 {
-                    var worksheet = workbook.Worksheets.Add("Cham Cong");
+
+
+                    TuNgay = new DateTime(TuNgay.Year, TuNgay.Month, TuNgay.Day, 0, 0, 0);
+                    DenNgay = new DateTime(DenNgay.Year, DenNgay.Month, DenNgay.Day, 23, 59, 59);
+
+
+                    var worksheet = workbook.Worksheets.Add("L1 - Chi tiết chấm công");
                     worksheet.Cell("A1").Value = "Họ tên";
                     worksheet.Cell("B1").Value = "Ngày giờ chấm";
                     worksheet.Cell("C1").Value = "Vào / Ra";
@@ -43,7 +51,11 @@ namespace VPK_ERP_API.Controllers
                     //worksheet.Columns("B").Cells().DataType = XLDataType.Text;
 
 
-                    var attendance_Detail = db.Attendance_Detail.Include(a => a.AttendanceReason).Include(a => a.Attendance_Header).Include(a => a.Employee);
+                    var attendance_Detail = db.Attendance_Detail.Include(a => a.AttendanceReason)
+                        .Include(a => a.Attendance_Header)
+                        .Include(a => a.Employee)
+                        .Where(w => w.CreatedDate >= TuNgay && w.CreatedDate <= DenNgay)
+                        .OrderBy(o => o.Employee.Fullname).ThenBy(o => o.Attendance_Header.AttendanceShortDate);
 
 
                     int count = 2;
@@ -65,7 +77,106 @@ namespace VPK_ERP_API.Controllers
 
 
 
+
+
+
+                    //thêm sheet tổng số giờ chấm công 1 người theo ngày
+
+                    var worksheetTongSoGio1Ngay = workbook.Worksheets.Add("L2 - Giờ làm từng người 1 ngày");
+                    worksheetTongSoGio1Ngay.Cell("A1").Value = "Họ tên";
+                    worksheetTongSoGio1Ngay.Cell("B1").Value = "Ngày tháng";
+                    worksheetTongSoGio1Ngay.Cell("C1").Value = "Tổng số giờ";
+
+
+                    worksheetTongSoGio1Ngay.Columns("B").Style.DateFormat.Format = "yyyy-mm-dd";
+
+
+
+                    var tongSoGio = db.Attendance_Header
+                    .Include(a => a.Employee)
+                    .Where(w => w.CreatedDate >= TuNgay && w.CreatedDate <= DenNgay)
+                    .OrderBy(o => o.Employee.Fullname).ThenBy(o => o.AttendanceShortDate);
+
+
+                    count = 2;
+
+                    foreach (var item in tongSoGio)
+                    {
+                        worksheetTongSoGio1Ngay.Cell("A" + count).Value = item.Employee.Fullname;
+                        worksheetTongSoGio1Ngay.Cell("B" + count).Value = item.AttendanceShortDate.Value.ToString("yyyy-MM-dd");
+                        worksheetTongSoGio1Ngay.Cell("C" + count).Value = item.TotalWorkingHours;
+                        count++;
+
+
+                    }
+
+
+                    worksheetTongSoGio1Ngay.Columns().AdjustToContents();
+
+
+
+                    //thêm sheet tổng số giờ chấm công 1 người theo tháng
+
+                    string connString = System.Configuration.ConfigurationManager.ConnectionStrings["MyServer"].ToString();
+
+
+                    SqlConnection conn = new SqlConnection(connString);
+                    conn.Open();
+
+
+                    SqlDataAdapter adap = new SqlDataAdapter(@"SELECT a.Fullname,
+                                               LEFT(b.AttendanceShortDate, 7) AS AttendanceShortDate,
+                                               SUM(   CASE
+                                                          WHEN b.TotalWorkingHours IS NOT NULL THEN
+                                                              b.TotalWorkingHours
+                                                          ELSE
+                                                              0
+                                                      END
+                                                  ) AS TotalWorkingHours
+                                        FROM dbo.Employees AS a
+                                            INNER JOIN dbo.Attendance_Header AS b
+                                                ON a.RowID = b.RowIDEmployee
+                                        WHERE b.AttendanceShortDate
+                                        BETWEEN '" + TuNgay + @"' AND '" + DenNgay + @"'
+                                        GROUP BY a.Fullname,
+                                                 LEFT(b.AttendanceShortDate, 7)
+                                        ORDER BY a.Fullname; ", conn);
+
+
+                    DataTable tb = new DataTable();
+                    adap.Fill(tb);
+
+                    conn.Close();
+
+
+
+
+                    var worksheetTongSoGio1Thang = workbook.Worksheets.Add("L3 - Giờ làm từng người 1 tháng");
+                    worksheetTongSoGio1Thang.Cell("A1").Value = "Họ tên";
+                    worksheetTongSoGio1Thang.Cell("B1").Value = "Tháng";
+                    worksheetTongSoGio1Thang.Cell("C1").Value = "Tổng số giờ";
+
+
+
+                    worksheetTongSoGio1Thang.Columns("B").Style.DateFormat.Format = "yyyy-mm";
+
+
+                    count = 2;
+                    foreach (DataRow item in tb.Rows)
+                    {
+                        worksheetTongSoGio1Thang.Cell("A" + count).Value = item["FullName"].ToString();
+                        worksheetTongSoGio1Thang.Cell("B" + count).Value = item["AttendanceShortDate"].ToString();
+                        worksheetTongSoGio1Thang.Cell("C" + count).Value = item["TotalWorkingHours"].ToString();
+                        count++;
+
+                    }
+
+
+                    worksheetTongSoGio1Thang.Columns().AdjustToContents();
+
+
                     string fileName = System.Web.Hosting.HostingEnvironment.MapPath("~");
+
 
                     if (!Directory.Exists(fileName + "\\" + "Excels"))
                     {
@@ -293,6 +404,8 @@ namespace VPK_ERP_API.Controllers
 
                     var searchobj = db.Attendance_Header.Where(w => w.RowIDEmployee == item && w.AttendanceShortDate.Value == d).FirstOrDefault();
 
+                    //tru72 1 tiếng nghỉ trưa
+                    tongGio1Ngay = tongGio1Ngay - 1;
                     searchobj.TotalWorkingHours = Math.Round(tongGio1Ngay, 2);
 
                     db.SaveChanges();
