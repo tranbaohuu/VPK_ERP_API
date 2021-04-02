@@ -86,6 +86,7 @@ namespace VPK_ERP_API.Controllers
                     worksheetTongSoGio1Ngay.Cell("A1").Value = "Họ tên";
                     worksheetTongSoGio1Ngay.Cell("B1").Value = "Ngày tháng";
                     worksheetTongSoGio1Ngay.Cell("C1").Value = "Tổng số giờ";
+                    worksheetTongSoGio1Ngay.Cell("D1").Value = "Lý do";
 
 
                     worksheetTongSoGio1Ngay.Columns("B").Style.DateFormat.Format = "yyyy-mm-dd";
@@ -404,8 +405,23 @@ namespace VPK_ERP_API.Controllers
 
                     var searchobj = db.Attendance_Header.Where(w => w.RowIDEmployee == item && w.AttendanceShortDate.Value == d).FirstOrDefault();
 
+
+
+
+
                     //tru72 1 tiếng nghỉ trưa
-                    tongGio1Ngay = tongGio1Ngay - 1;
+                    tongGio1Ngay = tongGio1Ngay - 1.5;
+
+
+
+                    //kiểm tra xem có phải t7 hay không?
+
+                    if (d.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        tongGio1Ngay += 5.5;
+                    }
+
+
                     searchobj.TotalWorkingHours = Math.Round(tongGio1Ngay, 2);
 
                     db.SaveChanges();
