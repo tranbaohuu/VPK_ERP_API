@@ -234,7 +234,6 @@ namespace VPK_ERP_API.Controllers
 
             List<DateTime> listDatetimes = new List<DateTime>();
             List<ChiTietChamCong> listGioVaoSomNhat = new List<ChiTietChamCong>();
-            List<ChiTietChamCong> listGioVaoTreNhat = new List<ChiTietChamCong>();
             List<ChiTietChamCong> listGioRaSomNhat = new List<ChiTietChamCong>();
 
 
@@ -273,20 +272,16 @@ namespace VPK_ERP_API.Controllers
 
 
                 var gioVaoSomNhat = listGioVao1Ngay.FirstOrDefault();
-                var gioVaoTreNhat = listGioVao1Ngay.Count >= 2 ? listGioVao1Ngay.LastOrDefault() : null;
 
                 var gioRaSomNhat = listGioRa1Ngay.FirstOrDefault();
-                var gioRaTreNhat = listGioRa1Ngay.Count >= 2 ? listGioRa1Ngay.LastOrDefault() : null;
 
 
                 listGioVaoSomNhat.Add(new ChiTietChamCong()
                 {
-                    RowIDEmployeeEdited = (gioVaoSomNhat != null && gioVaoSomNhat.RowIDEmployeeEdited.HasValue ? gioVaoSomNhat.RowIDEmployeeEdited.Value : gioVaoTreNhat != null && gioVaoTreNhat.RowIDEmployeeEdited.HasValue ? gioVaoTreNhat.RowIDEmployeeEdited.Value : gioRaSomNhat != null && gioRaSomNhat.RowIDEmployeeEdited.HasValue ? gioRaSomNhat.RowIDEmployeeEdited.Value : gioRaTreNhat != null && gioRaTreNhat.RowIDEmployeeEdited.HasValue ? gioRaTreNhat.RowIDEmployeeEdited.Value : 0)
+                    RowIDEmployeeEdited = (gioVaoSomNhat != null && gioVaoSomNhat.RowIDEmployeeEdited.HasValue ? gioVaoSomNhat.RowIDEmployeeEdited.Value : gioRaSomNhat != null && gioRaSomNhat.RowIDEmployeeEdited.HasValue ? gioRaSomNhat.RowIDEmployeeEdited.Value : 0)
                     ,
                     GioVaoSomNhat = (gioVaoSomNhat != null ? gioVaoSomNhat.CreatedDate : null),
-                    GioVaoTreNhat = (gioVaoTreNhat != null ? gioVaoTreNhat.CreatedDate : null),
                     GioRaSomNhat = (gioRaSomNhat != null ? gioRaSomNhat.CreatedDate : null),
-                    GioRaTreNhat = (gioRaTreNhat != null ? gioRaTreNhat.CreatedDate : null),
                     LyDo = (gioVaoSomNhat != null ? gioVaoSomNhat.AttendanceReason.Name.ToString() : ""),
                     Loai = "GioVaoSomNhat"
                 });
@@ -303,7 +298,7 @@ namespace VPK_ERP_API.Controllers
             foreach (var item in listDatetimes)
             {
 
-                listTam.Add(new ChiTietChamCong { NgayGio = item, GioVaoSomNhat = null, GioVaoTreNhat = null, GioRaSomNhat = null, GioRaTreNhat = null, Loai = "Rong", LyDo = "" });
+                listTam.Add(new ChiTietChamCong { NgayGio = item, GioVaoSomNhat = null, GioRaSomNhat = null, Loai = "Rong", LyDo = "" });
 
 
 
@@ -326,12 +321,10 @@ namespace VPK_ERP_API.Controllers
 
 
 
-                    if ((item.GioVaoSomNhat >= fromDateSom && item.GioVaoSomNhat <= toDateTre) || (item.GioVaoTreNhat >= fromDateSom && item.GioVaoTreNhat <= toDateTre) || (item.GioRaSomNhat >= fromDateSom && item.GioRaSomNhat <= toDateTre) || (item.GioRaTreNhat >= fromDateSom && item.GioRaTreNhat <= toDateTre))
+                    if ((item.GioVaoSomNhat >= fromDateSom && item.GioVaoSomNhat <= toDateTre) || (item.GioRaSomNhat >= fromDateSom && item.GioRaSomNhat <= toDateTre))
                     {
                         chitiet.GioVaoSomNhat = item.GioVaoSomNhat;
-                        chitiet.GioVaoTreNhat = item.GioVaoTreNhat;
                         chitiet.GioRaSomNhat = item.GioRaSomNhat;
-                        chitiet.GioRaTreNhat = item.GioRaTreNhat;
                         chitiet.RowIDEmployeeEdited = item.RowIDEmployeeEdited;
                         chitiet.LyDo = item.LyDo;
                         chitiet.Loai = item.Loai;

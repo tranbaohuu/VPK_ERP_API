@@ -179,6 +179,10 @@ namespace VPK_ERP_API.Controllers
                 rh.Description = c.GhiChu;
                 rh.RowIDEmployeeCreated = c.EmployeeID;
                 rh.RowIDBuilding = c.RowIDCongTrinh;
+                if (c.RowIDCongTrinhThamChieu != 0)
+                {
+                    rh.RowIDTargetBuilding = c.RowIDCongTrinhThamChieu;
+                }
 
 
                 rh.CreatedDate = DateTime.Now;
@@ -449,6 +453,101 @@ namespace VPK_ERP_API.Controllers
         }
 
 
+
+
+        [HttpGet]
+        //[ResponseType(typeof(Building))]
+        [Route("api/danh-sach-phieu-chi-noi-bo")]
+        public IHttpActionResult DanhSachToanBoPhieuChiHeaderVaDetail_NoiBo(int ReceiptType)
+        {
+
+
+
+            var listOfReceiptHeaderAndLine = db.ReceiptHeaders
+               .Join(db.ReceiptLines, h => h.RowID, l => l.RowIDReceiptHeader, (h, l) => new { h, l })
+               .Join(db.Buildings, h2 => h2.h.RowIDBuilding, b => b.RowID, (h2, b) => new { h2, b })
+               .Where(w => w.h2.l.IsDeleted == false && w.h2.h.Type == ReceiptType && w.h2.h.RowIDBuilding == 134)
+               .Select(s => new
+               {
+
+                   s.h2.l.RowID,
+                   s.h2.l.Status,
+                   s.h2.l.TotalPrice,
+                   s.h2.l.CreatedDate,
+                   s.h2.l.Supplier,
+                   s.h2.l.Unit,
+                   s.h2.l.UnitPrice,
+                   s.h2.l.Quantity,
+                   s.h2.l.Item,
+                   s.h2.l.Category,
+                   s.b.Code,
+                   CodeRef = db.Buildings.Where(wx => wx.RowID == s.h2.h.RowIDTargetBuilding).Select(sx => sx.Code).FirstOrDefault(),
+                   RowIDBuilding = s.b.RowID,
+                   RowIDBuildingTarget = s.h2.h.RowIDTargetBuilding,
+                   Customer = s.b.Customer_Building.Select(s2 => new Child_Customer
+                   {
+
+                       FullName = s2.Customer.FullName,
+                       FullNameEnglish = s2.Customer.FullNameEnglish,
+                       Sex = s2.Customer.Sex,
+                       BirthDay = s2.Customer.BirthDay,
+                       Age = s2.Customer.Age,
+                       Address = s2.Customer.Address,
+                       WardID = s2.Customer.WardID,
+                       DistrictID = s2.Customer.DistrictID,
+                       CityID = s2.Customer.CityID,
+                       Phone = s2.Customer.Phone,
+                       Email = s2.Customer.Email,
+                       Picture = s2.Customer.Picture,
+                       CreatedDate = s2.Customer.CreatedDate,
+                       EditedDate = s2.Customer.EditedDate,
+                       EmployeeID = s2.Customer.EmployeeID,
+                       IsDelete = s2.Customer.IsDelete,
+                       TaxCode = s2.Customer.TaxCode,
+                       IDCardNo = s2.Customer.IDCardNo,
+                       DateOfIssue = s2.Customer.DateOfIssue,
+                       PlaceOfIssue = s2.Customer.PlaceOfIssue,
+                       IsActive = s2.Customer.IsActive,
+                       RowID = s2.Customer.RowID,
+                       RowIDEmployeeCreated = s2.Customer.RowIDEmployeeCreated,
+                       RowIDEmployeeEdited = s2.Customer.RowIDEmployeeEdited,
+
+
+
+                   }
+
+                   ).FirstOrDefault(),
+                   s.h2.l.Description,
+                   ContractCode = s.h2.l.Contract.ContractCode + " - " + s.h2.l.Contract.ContractType,
+                   FullName = s.b.Customer_Building.Select(s1 => s1.Customer.FullName).FirstOrDefault(),
+                   //của receiptline
+                   RowIDReceiptLine = s.h2.h.ReceiptLines.Select(s3 => s3.RowID).FirstOrDefault(),
+                   NgayNhap = s.h2.h.InputDate
+                   //  s.ReceiptHeader.Code,
+                   //DescriptionReceiptHeader = s.ReceiptHeader.Description,
+                   //s.RowID,
+                   //s.Description,
+                   //s.Times,
+                   //s.TotalPrice,
+                   //s.CreatedDate,
+                   //s.Category,
+                   //s.Item,
+                   //s.Unit,
+                   //s.Supplier,
+                   //ContractCode = (s.Contract != null ? s.Contract.ContractCode : ""),
+                   //RowIDContract = (s.Contract != null ? s.Contract.RowID : -1)
+
+
+
+
+                   //ListOfReceipLine = s.ReceiptLines.Select(s2 => new { s2.RowID, s2.Description, s2.RowIDContract }).ToList()
+
+
+               }).OrderByDescending(o => o.RowID).ToList();
+
+            return Ok(listOfReceiptHeaderAndLine);
+
+        }
 
 
         [HttpPost]
