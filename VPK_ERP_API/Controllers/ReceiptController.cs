@@ -371,7 +371,7 @@ namespace VPK_ERP_API.Controllers
             var listOfReceiptHeaderAndLine = db.ReceiptHeaders
                .Join(db.ReceiptLines, h => h.RowID, l => l.RowIDReceiptHeader, (h, l) => new { h, l })
                .Join(db.Buildings, h2 => h2.h.RowIDBuilding, b => b.RowID, (h2, b) => new { h2, b })
-               .Where(w => w.h2.l.IsDeleted == false && w.h2.h.Type == ReceiptType)
+               .Where(w => w.h2.l.IsDeleted == false && w.h2.h.Type == ReceiptType && w.h2.h.RowIDBuilding != 134)
                .Select(s => new
                {
 
