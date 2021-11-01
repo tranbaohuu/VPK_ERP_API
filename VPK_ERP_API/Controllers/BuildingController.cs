@@ -74,7 +74,7 @@ namespace VPK_ERP_API.Controllers
                 Contract_Type = s.Building.Contracts.Select(s1 => s1.ContractType).FirstOrDefault(),
                 s.Building.Address,
                 CreatedDate = s.Building.CreatedDate != null ? s.Building.CreatedDate.Value.ToString("dd/MM/yyyy") : "",
-                TotalContractPrice = s.Building.Contracts.Sum(k => k.ContractPrice)
+                TotalContractPrice = s.Building.Contracts.Where(w2 => w2.IsDelete == false).Sum(k => k.ContractPrice)
 
 
 
