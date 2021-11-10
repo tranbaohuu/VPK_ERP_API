@@ -219,7 +219,6 @@ namespace VPK_ERP_API.Controllers
         [Route("api/tinh-cham-cong")]
         public void TinhToanLuongVaCapNhat()
         {
-            bool flagKhongDuThoiGian = false;
 
 
 
@@ -323,7 +322,6 @@ namespace VPK_ERP_API.Controllers
         [Route("api/tinh-cham-cong-v2")]
         public void TinhToanLuongVaCapNhat_v2()
         {
-            bool flagKhongDuThoiGian = false;
 
 
 
@@ -354,7 +352,7 @@ namespace VPK_ERP_API.Controllers
                     var listGioVao1Ngay = listAllDays.Where(w => w.Type == "IN" && w.CreatedDate.Value.ToShortDateString() == soNgay).OrderBy(o => o.CreatedDate).ToList();
                     var listGioRa1Ngay = listAllDays.Where(w => w.Type == "OUT" && w.CreatedDate.Value.ToShortDateString() == soNgay).OrderBy(o => o.CreatedDate).ToList();
 
-
+                    
                     if (listGioVao1Ngay.Count < 1)
                     {
                         var arrSplitTemp1 = soNgay.Split('/');
