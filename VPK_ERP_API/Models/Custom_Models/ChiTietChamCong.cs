@@ -74,6 +74,8 @@ namespace VPK_ERP.Models.Custom_Models
 
         public string Reason { get; set; }
 
+        public string ChuoiToken { get; set; }
+
         public DateTime NgayDangKy { get; set; }
 
         public int IDNguoiDuocChamCong { get; set; }

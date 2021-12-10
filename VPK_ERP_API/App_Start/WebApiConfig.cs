@@ -14,21 +14,39 @@ namespace VPK_ERP_API
         {
 
 
-            //EmployeesController em = new EmployeesController();
+            EmployeesController em = new EmployeesController();
+            //tạo chuỗi token
+            string chuoiToken = em.GenerateToken(new Employee()
+            {
+                RowID = 4,
+                Username = "admin",
+                Fullname = "Admin",
+                Color = "Red"
+
+            });
+
+            ////xác thực chuỗi token
+            //bool abc = em.ValidateCurrentToken(chuoiToken);
+
+
+            ////lấy tham số chuỗi token
+            //string layClaim = em.GetClaim(chuoiToken, "Color");
+
+
             //var layChuoi = em.ChayMatKhau("vpk@123");
 
-            Toolkits t = new Toolkits();
-            ////t.Select_All_Menu2_Huu_2(4);
+            //Toolkits t = new Toolkits();
+            //////t.Select_All_Menu2_Huu_2(4);
 
 
-            //nếu  ra số âm là giá thương lượng
-            var total = t.TinhToanGiaCongTrinh(
-                  120000 /*Gia tiền thiết kế kiến trúc*/,
-                  120000 /*Giá tiền thiết kế nội thất*/,
-                  555 /*Diện tích*/, true /*Có thiết kế kiến trúc*/,
-                  false /*Có thiết kế nội thất*/,
-                  false /*Có thiết kế trọn gói*/,
-                  true /*Có thiết kế tân cổ điển*/);
+            ////nếu  ra số âm là giá thương lượng
+            //var total = t.TinhToanGiaCongTrinh(
+            //      120000 /*Gia tiền thiết kế kiến trúc*/,
+            //      120000 /*Giá tiền thiết kế nội thất*/,
+            //      555 /*Diện tích*/, true /*Có thiết kế kiến trúc*/,
+            //      false /*Có thiết kế nội thất*/,
+            //      false /*Có thiết kế trọn gói*/,
+            //      true /*Có thiết kế tân cổ điển*/);
 
 
 

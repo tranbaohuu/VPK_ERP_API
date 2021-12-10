@@ -266,7 +266,7 @@ namespace VPK_ERP_API.Controllers
 
                     //if (listGioRa1Ngay.Count == 2)
                     //{
-                    //    var arrSplitTemp2 = soNgay.Split('/');
+                    //    var arrSplitTemp2 = soNgay.Split('/');h
                     //    DateTime d2 = new DateTime(Int32.Parse(arrSplitTemp2[2]), Int32.Parse(arrSplitTemp2[0]), Int32.Parse(arrSplitTemp2[1]));
                     //    var temp2 = db.Attendance_Header.Where(w => w.RowIDEmployee == item && w.AttendanceShortDate.Value == d2).FirstOrDefault();
 
