@@ -163,59 +163,59 @@ namespace VPK_ERP_API.Controllers
 
             string[] mangNgay = c.NgayNhap.Split('/');
 
-            DateTime tuNgay = new DateTime(Int32.Parse(mangNgay[2]), Int32.Parse(mangNgay[1]), Int32.Parse(mangNgay[0]), 0, 0, 0);
-            DateTime denNgay = new DateTime(Int32.Parse(mangNgay[2]), Int32.Parse(mangNgay[1]), Int32.Parse(mangNgay[0]), 23, 59, 59);
+            //DateTime tuNgay = new DateTime(Int32.Parse(mangNgay[2]), Int32.Parse(mangNgay[1]), Int32.Parse(mangNgay[0]), 0, 0, 0);
+            //DateTime denNgay = new DateTime(Int32.Parse(mangNgay[2]), Int32.Parse(mangNgay[1]), Int32.Parse(mangNgay[0]), 23, 59, 59);
 
-            var objHeader = db.ReceiptHeaders.Where(w => w.RowIDBuilding == c.RowIDCongTrinh && w.CreatedDate >= tuNgay && w.CreatedDate <= denNgay).FirstOrDefault();
+            //var objHeader = db.ReceiptHeaders.Where(w => w.RowIDBuilding == c.RowIDCongTrinh && w.CreatedDate >= tuNgay && w.CreatedDate <= denNgay).FirstOrDefault();
 
             int affectedRows = 0;
             int RowIDReceiptHeader = 0;
 
-            if (objHeader == null)
+            //if (objHeader == null)
+            //{
+
+            ReceiptHeader rh = new ReceiptHeader();
+
+            rh.Description = c.GhiChu;
+            rh.RowIDEmployeeCreated = c.EmployeeID;
+            rh.RowIDBuilding = c.RowIDCongTrinh;
+            if (c.RowIDCongTrinhThamChieu != 0)
             {
-
-                ReceiptHeader rh = new ReceiptHeader();
-
-                rh.Description = c.GhiChu;
-                rh.RowIDEmployeeCreated = c.EmployeeID;
-                rh.RowIDBuilding = c.RowIDCongTrinh;
-                if (c.RowIDCongTrinhThamChieu != 0)
-                {
-                    rh.RowIDTargetBuilding = c.RowIDCongTrinhThamChieu;
-                }
+                rh.RowIDTargetBuilding = c.RowIDCongTrinhThamChieu;
+            }
 
 
-                rh.CreatedDate = DateTime.Now;
+            rh.CreatedDate = DateTime.Now;
 
 
-                string[] mangNgayNhap = c.NgayNhap.Split('/');
+            string[] mangNgayNhap = c.NgayNhap.Split('/');
 
-                rh.InputDate = new DateTime(int.Parse(mangNgayNhap[2]), int.Parse(mangNgayNhap[1]), int.Parse(mangNgayNhap[0]), 0, 0, 0);
+            rh.InputDate = new DateTime(int.Parse(mangNgayNhap[2]), int.Parse(mangNgayNhap[1]), int.Parse(mangNgayNhap[0]), 0, 0, 0);
 
 
 
-                rh.Type = c.ReceiptType;
+            rh.Type = c.ReceiptType;
 
-                db.ReceiptHeaders.Add(rh);
+            db.ReceiptHeaders.Add(rh);
 
-                affectedRows = db.SaveChanges();
-
-
-
-                if (affectedRows > 0)
-                {
-                    RowIDReceiptHeader = rh.RowID;
+            affectedRows = db.SaveChanges();
 
 
-                }
+
+            if (affectedRows > 0)
+            {
+                RowIDReceiptHeader = rh.RowID;
 
 
             }
-            else
-            {
-                affectedRows = 99;
-                RowIDReceiptHeader = objHeader.RowID;
-            }
+
+
+            //}
+            //else
+            //{
+            //    affectedRows = 99;
+            //    RowIDReceiptHeader = objHeader.RowID;
+            //}
 
 
 
