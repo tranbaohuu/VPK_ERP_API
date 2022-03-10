@@ -22,6 +22,8 @@ namespace VPK_ERP_API.Controllers
 
 
 
+
+
         [HttpPost]
         [Route("api/tao-thanh-menu")]
         public IHttpActionResult TaoThanhMenu([FromBody] ThongTinChamCong obj)
@@ -77,6 +79,8 @@ namespace VPK_ERP_API.Controllers
             var myIssuer = "https://erp.vuongphuckhang.com";
             var myAudience = "https://erp.vuongphuckhang.com";
 
+            var myTime = DateTime.Now.AddDays(7);
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -88,7 +92,7 @@ namespace VPK_ERP_API.Controllers
             new Claim("Fullname", em.Fullname.ToString()),
 
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = myTime,
                 Issuer = myIssuer,
                 Audience = myAudience,
                 SigningCredentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature)
@@ -109,6 +113,7 @@ namespace VPK_ERP_API.Controllers
             var myAudience = "https://erp.vuongphuckhang.com";
 
             var tokenHandler = new JwtSecurityTokenHandler();
+            
             try
             {
                 tokenHandler.ValidateToken(token, new TokenValidationParameters

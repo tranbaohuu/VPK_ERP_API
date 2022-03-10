@@ -14,9 +14,9 @@ namespace VPK_ERP_API
         {
 
 
-            EmployeesController em = new EmployeesController();
+            UtilitiesController uti = new UtilitiesController();
             //tạo chuỗi token
-            string chuoiToken = em.GenerateToken(new Employee()
+            string chuoiToken = uti.GenerateToken(new Employee()
             {
                 RowID = 4,
                 Username = "admin",
