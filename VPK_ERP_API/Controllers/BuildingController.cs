@@ -65,25 +65,70 @@ namespace VPK_ERP_API.Controllers
 
 
 
-            var listBuildings = db.Customer_Building.Where(w => w.RowIDCustomer == c.RowID && w.IsDelete == false).ToList().Select(s => new
+            var listBuildings = db.Customer_Building.Where(w => w.RowIDCustomer == c.RowID && w.IsDelete == false).ToList().Select(s => new Child_Contract
             {
-                s.Building.RowID,
-                s.Building.Code,
-                s.Building.Name,
+                RowID = s.Building.RowID,
+                Code = s.Building.Code,
+                Name = s.Building.Name,
                 Contract_Code = s.Building.Contracts.Select(s1 => s1.ContractCode).FirstOrDefault(),
                 Contract_Type = s.Building.Contracts.Select(s1 => s1.ContractType).FirstOrDefault(),
-                s.Building.Address,
+                Address = s.Building.Address,
                 CreatedDate = s.Building.CreatedDate != null ? s.Building.CreatedDate.Value.ToString("dd/MM/yyyy") : "",
-                TotalContractPrice = s.Building.Contracts.Where(w2 => w2.IsDelete == false).Sum(k => k.ContractPrice)
-
-
-
-
+                TotalContractPrice = s.Building.Contracts.Where(w2 => w2.IsDelete == false).Sum(k => k.ContractPrice),
+                TotalRealIncome = 0,
+                RowIDContract = s.Building.Contracts.Select(s1 => s1.RowID).FirstOrDefault(),
 
 
 
             }).OrderByDescending(o => o.RowID).ToList();
 
+
+
+            foreach (var item in listBuildings)
+            {
+
+                var listPhieuThuTheoHopDong = (from rl in db.ReceiptLines
+                                               join rh in db.ReceiptHeaders on rl.RowIDReceiptHeader equals rh.RowID
+                                               where rh.Type == 0
+                                               && rl.RowIDContract == item.RowIDContract
+                                               select new
+                                               {
+                                                   rl.TotalPrice
+                                               }).ToList();
+
+                long tongThu = 0;
+
+                if (listPhieuThuTheoHopDong.Count > 0)
+                {
+                    tongThu = listPhieuThuTheoHopDong.Sum(s => s.TotalPrice.Value);
+
+                }
+
+
+
+                var listPhieuChiTheoHopDong = (from rl in db.ReceiptLines
+                                               join rh in db.ReceiptHeaders on rl.RowIDReceiptHeader equals rh.RowID
+                                               where rh.Type == 1
+                                               && rl.RowIDContract == item.RowIDContract
+                                               select new
+                                               {
+                                                   rl.TotalPrice
+                                               }).ToList();
+
+                long tongChi = 0;
+
+                if (listPhieuChiTheoHopDong.Count > 0)
+                {
+                    tongChi = listPhieuChiTheoHopDong.Sum(s => s.TotalPrice.Value);
+
+                }
+
+
+
+                item.TotalRealIncome = tongThu - tongChi;
+
+
+            }
 
 
 
